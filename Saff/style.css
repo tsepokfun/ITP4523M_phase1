@@ -1,4 +1,4 @@
-/* Style.css */
+Style.css
 * {
     box-sizing: border-box;
     font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -6,17 +6,14 @@
 
 body {
     background-color: #f8f9fa;
-    margin: 0;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
 }
 
 h1 {
-    font-size: 24px;
-    font-weight: 500;
+    font-size: 30px;
+    font-weight: 500, bold;
     color: #202124;
     text-align: center;
     margin-top: 40px;
@@ -25,12 +22,11 @@ h1 {
 
 .card-container {
     background-color: white;
-    padding: 40px;
+    padding: 50px;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 1500px;
 }
 
 .info-grid {
@@ -76,38 +72,6 @@ h1 {
     border-bottom: 2px solid #1a73e8;
 }
 
-.sex-item {
-    grid-column: 1 / span 2; 
-    border-bottom: none;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; 
-}
-
-
-.radio-group {
-    display: flex;
-    flex-direction: row; 
-    gap: 100px;          
-    width: 100%;
-    margin-top: 10px;
-}
-
-
-.radio-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;        
-    font-size: 16px;
-    font-weight: normal;
-    cursor: pointer;
-}
-
-
-.radio-group input[type="radio"] {
-    width: auto;
-    margin: 0;
-}
 
 .button-group {
     grid-column: 1 / span 2;
@@ -126,17 +90,18 @@ h1 {
     cursor: pointer;
     border: none;
     transition: 0.2s;
+
 }
 
 .button-primary {
     background-color: #1a73e8;
     color: white;
-    box-shadow: 0 1px 2px rgba(60,64,67,0.3);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3);
 }
 
 .button-primary:hover {
     background-color: #1765cc;
-    box-shadow: 0 4px 8px rgba(60,64,67,0.2);
+    box-shadow: 0 4px 8px rgba(60, 64, 67, 0.2);
 }
 
 .button-reset {
@@ -149,3 +114,49 @@ h1 {
     background-color: #f1f3f4;
     border-color: #d2d4d7;
 }
+
+th {
+    background-color: #f1f3f4;
+    padding: 16px 45px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #202124;
+    white-space: nowrap;
+}
+
+td {
+    padding: 16px ;
+    font-size: 15px;
+    color: #202124;
+    font-weight: 500;
+    border-bottom: 1px solid #f1f3f4;
+   text-align: left;                                                
+}
+
+.ProductImage {
+    width: 400px;
+    height: fit-content;
+    border-radius: 4px;
+    display: block;
+    margin-right: 0%;
+    margin-bottom: 20px;
+}
+
+.image-link {
+    display: inline-block;
+    text-decoration: none;
+    margin: 10px;
+}
+
+.image-link:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.FurnitureName{
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    color: #202124;
+}
+

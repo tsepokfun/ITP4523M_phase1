@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Style.css">
+    <title>Order</title>
+</head>
+
+<body>
+    <h1>Order Details</h1>
+    <div class="card-container">
+        <div class="filter-section">
+            <span class="info-label" style="margin:0">Sort Criteria:</span>
+            <div class="filter-group">
+                <select id="sortFirst">
+                    <option value="orderId">Order Id</option>
+                    <option value="orderDate" selected>Order Date</option>
+                    <option value="totalAmount">Total Amount</option>
+                    <option value="status">Status</option>
+                </select>
+                <select id="orderFirst">
+                    <option value="asc">Ascending</option>
+                    <option value="desc" selected>Descending</option>
+                </select>
+            </div>
+            <button class="button button-primary" type="button">Apply</button>
+        </div>
+        <table class="order-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Furniture ID</th>
+                    <th>Order Quantity</th>
+                    <th>Total Order Amount</th>
+                    <th>Customer ID</th>
+                    <th>Order Delivery Date</th>
+                    <th>Order Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#ORD-1001</td>
+                    <td>2026-03-25</td>
+                    <td>P-1</td>
+                    <td>2</td>
+                    <td>$12,000</td>
+                    <td>C-882</td>
+                    <td>2026-04-05</td>
+                    <td><span class="status-pill status-delivered">processing</span></td>
+                </tr>
+                <tr>
+                    <td>#ORD-1002</td>
+                    <td>2023-10-26</td>
+                    <td>P-2</td>
+                    <td>1</td>
+                    <td>$4,500</td>
+                    <td>C-451</td>
+                    <td>2026-07-05</td>
+                    <td><span class="status-pill status-pending">pending</span></td>
+                </tr>
+            </tbody>
+        </table>
+</body>
+
+</html>
