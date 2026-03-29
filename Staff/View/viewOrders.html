@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <title>View Orders - Premium Living</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .table-card { background: white; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden; }
+        .table-toolbar { padding: 16px 24px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; background: #fff; }
+        .search-box { padding: 8px 16px; border: 1px solid #dadce0; border-radius: 24px; width: 300px; font-size: 14px; outline: none; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 14px 24px; border-bottom: 1px solid #e0e0e0; font-size: 14px; }
+        th { font-weight: 500; color: #5f6368; font-size: 13px; text-transform: uppercase; background: #fafafa; }
+        tr:hover { background-color: #f8f9fa; }
+        
+        .badge { padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+        .badge-processing { background-color: #fef7e0; color: #b06000; }
+        .badge-shipped { background-color: #e8f0fe; color: #1a73e8; }
+        .badge-delivered { background-color: #e6f4ea; color: #137333; }
+        
+        .btn-text { background: none; border: none; color: #1a73e8; font-weight: 500; cursor: pointer; padding: 6px 12px; border-radius: 4px; }
+        .btn-text:hover { background-color: #e8f0fe; }
+    </style>
+</head>
+<body>
+    <div id="sidebar-container"></div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">View Orders</div>
+            <div class="user-info"><span>Admin</span><div class="avatar">A</div></div>
+        </div>
+
+        <div class="content-container">
+            <div class="table-card">
+                <div class="table-toolbar">
+                    <input type="text" class="search-box" placeholder="🔍 Search order ID (OID) or Customer (CID)...">
+                    <select style="padding: 8px 16px; border: 1px solid #dadce0; border-radius: 4px; background: white; outline: none;">
+                        <option>All Status</option>
+                        <option>Processing</option>
+                        <option>Shipped</option>
+                        <option>Delivered</option>
+                    </select>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>OID</th>
+                            <th>Order Date (odate)</th>
+                            <th>Customer (cid)</th>
+                            <th>Total Amount (ototalamount)</th>
+                            <th>Expected Delivery (odeliverydate)</th>
+                            <th>Status (ostatus)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#1001</td>
+                            <td>2025-10-10 14:30</td>
+                            <td>CID: 1 Chin Tai Min</td>
+                            <td style="font-weight: 500;">$4,250.00</td>
+                            <td>2025-10-15</td>
+                            <td><span class="badge badge-processing">Processing (1)</span></td>
+                            <td><button class="btn-text">Order Details</button></td>
+                        </tr>
+                        <tr>
+                            <td>#1002</td>
+                            <td>2025-10-11 09:15</td>
+                            <td>CID: 2 Li Ka Yan</td>
+                            <td style="font-weight: 500;">$12,800.00</td>
+                            <td>2025-10-18</td>
+                            <td><span class="badge badge-shipped">Shipped (3)</span></td>
+                            <td><button class="btn-text">Order Details</button></td>
+                        </tr>
+                        <tr>
+                            <td>#1003</td>
+                            <td>2025-10-12 16:45</td>
+                            <td>CID: 3 張學友 (Cheung Hok Yau)</td>
+                            <td style="font-weight: 500;">$2,500.00</td>
+                            <td>2025-10-14</td>
+                            <td><span class="badge badge-delivered">Delivered (4)</span></td>
+                            <td><button class="btn-text">Order Details</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="../sidebar.js"></script>
+    <script> loadSidebar('view-orders'); </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+/* style.css */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', system-ui, sans-serif; }
+body { background-color: #f5f5f5; display: flex; height: 100vh; overflow: hidden; }
+
+/* 側邊欄共用樣式 */
+.sidebar { 
+    width: 280px; 
+    background-color: #ffffff; 
+    box-shadow: 2px 0 8px rgba(0,0,0,0.05); 
+    display: flex; 
+    flex-direction: column; 
+    padding: 24px 16px; 
+    
+    /* 確保側邊欄獨立滾動的關鍵設定 */
+    height: 100vh; 
+    flex-shrink: 0; 
+    overflow-y: auto; /* 內容過多時顯示卷軸 */
+    z-index: 10; 
+}
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-thumb { background-color: #dadce0; border-radius: 10px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.logo-area { font-size: 20px; font-weight: 500; color: #1e3a5f; padding: 0 16px 24px 16px; border-bottom: 1px solid #e0e0e0; margin-bottom: 24px; }
+.nav-section { margin-bottom: 24px; }
+.nav-title { font-size: 13px; font-weight: 500; color: #5f6368; padding: 8px 16px; text-transform: uppercase; letter-spacing: 0.5px;}
+.nav-item { display: block; padding: 10px 16px; margin: 2px 8px; border-radius: 24px; color: #202124; text-decoration: none; font-size: 14px; font-weight: 500; transition: 0.2s; }
+.nav-item:hover { background-color: #f0f0f0; }
+.nav-item.active { background-color: #e8f0fe; color: #1a73e8; }
+
+/* 主內容與頂部共用樣式 */
+.main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+.top-bar { background-color: #ffffff; padding: 12px 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e0e0e0; position: sticky; top: 0; z-index: 5;}
+.page-title { font-size: 22px; font-weight: 500; color: #202124; }
+.user-info { display: flex; align-items: center; gap: 16px; }
+.avatar { width: 40px; height: 40px; background-color: #1a73e8; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 500; }
+.content-container { padding: 24px 32px; }

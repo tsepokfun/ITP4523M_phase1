@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Materials - Premium Living</title>
+    <!-- 引入共用的 CSS -->
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* 表格與輸入框樣式 */
+        .table-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid #e0e0e0; font-size: 14px; }
+        th { font-weight: 500; color: #5f6368; font-size: 13px; text-transform: uppercase; }
+        
+        .qty-input { width: 100px; padding: 6px 10px; border: 1px solid #dadce0; border-radius: 4px; outline: none; font-size: 14px; text-align: center; }
+        .qty-input:focus { border-color: #1a73e8; }
+        
+        .btn { padding: 6px 16px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: 0.2s; }
+        .btn-update { background-color: #e8f0fe; color: #1a73e8; border-color: #d2e3fc; }
+        .btn-update:hover { background-color: #d2e3fc; }
+        .btn-delete { background-color: transparent; color: #d93025; border-color: #d93025; margin-left: 8px; }
+        .btn-delete:hover { background-color: #fce8e6; }
+
+        /* 低庫存警告標籤 */
+        .warning-badge { background-color: #fce8e6; color: #d93025; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 500; margin-left: 8px; }
+    </style>
+</head>
+<body>
+
+    <!-- 側邊欄容器 -->
+    <div id="sidebar-container"></div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">Manage Materials</div>
+            <div class="user-info"><span>Admin</span><div class="avatar">A</div></div>
+        </div>
+
+        <div class="content-container">
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Material ID (mid)</th>
+                            <th>Material Name</th>
+                            <th>Unit</th>
+                            <th>Current Quantity</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 模擬 SQL 資料 -->
+                        <tr id="row-mid-1">
+                            <td>#1</td>
+                            <td>Oak Wood Plank</td>
+                            <td>pcs</td>
+                            <td>
+                                <input type="number" id="qty-1" class="qty-input" value="500" min="0">
+                            </td>
+                            <td>
+                                <button class="btn btn-update" onclick="updateStock(1, 'Oak Wood Plank')">Update Stock</button>
+                                <button class="btn btn-delete" onclick="deleteMaterial(1, 'Oak Wood Plank')">Delete</button>
+                            </td>
+                        </tr>
+                        <tr id="row-mid-2">
+                            <td>#2</td>
+                            <td>Steel Tube</td>
+                            <td>meter</td>
+                            <td>
+                                <input type="number" id="qty-2" class="qty-input" value="200" min="0">
+                            </td>
+                            <td>
+                                <button class="btn btn-update" onclick="updateStock(2, 'Steel Tube')">Update Stock</button>
+                                <button class="btn btn-delete" onclick="deleteMaterial(2, 'Steel Tube')">Delete</button>
+                            </td>
+                        </tr>
+                        <tr id="row-mid-4">
+                            <td>#4</td>
+                            <td>High Density Foam <span class="warning-badge">Low Stock</span></td>
+                            <td>block</td>
+                            <td>
+                                <input type="number" id="qty-4" class="qty-input" value="50" min="0" style="border-color: #d93025; background-color: #fce8e6;">
+                            </td>
+                            <td>
+                                <button class="btn btn-update" onclick="updateStock(4, 'High Density Foam')">Update Stock</button>
+                                <button class="btn btn-delete" onclick="deleteMaterial(4, 'High Density Foam')">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入側邊欄 JS -->
+    <script src="../sidebar.js"></script>
+    <script>
+        // 告訴 sidebar.js 現在是 manage-materials 頁面
+        loadSidebar('manage-materials');
+
+        // 更新物料庫存
+        function updateStock(mid, mname) {
+            let newQty = document.getElementById(`qty-${mid}`).value;
+            if(confirm(`Are you sure you want to update the stock quantity of "${mname}" to ${newQty}?`)) {
+                alert(`Update successful!\n${mname} has been updated to ${newQty}.`);
+                
+                // 簡單的 UI 互動：如果大於 100，移除低庫存的紅色樣式 (展示用)
+                let inputBlock = document.getElementById(`qty-${mid}`);
+                if(newQty > 100 && mid == 4) {
+                    inputBlock.style.borderColor = "#dadce0";
+                    inputBlock.style.backgroundColor = "white";
+                }
+            }
+        }
+
+        // 刪除物料
+        function deleteMaterial(mid, mname) {
+            if(confirm(`⚠️ warning: Are you sure you want to permanently delete material "${mname} (MID: ${mid})"?\nThis will break the database relationship with FurnitureMaterials (BOM)!`)) {
+                document.getElementById(`row-mid-${mid}`).style.display = 'none';
+                alert(`Material ${mname} has been deleted.`);
+            }
+        }
+    </script>
+</body>
+</html>

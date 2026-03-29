@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <title>View Customers - Premium Living</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* 頁面專屬表格樣式 (可考慮移入 style.css) */
+        .table-card { background: white; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden; }
+        .table-toolbar { padding: 16px 24px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; background: #fff; }
+        .search-box { padding: 8px 16px; border: 1px solid #dadce0; border-radius: 24px; width: 300px; font-size: 14px; outline: none; }
+        .search-box:focus { border-color: #1a73e8; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 14px 24px; border-bottom: 1px solid #e0e0e0; font-size: 14px; }
+        th { font-weight: 500; color: #5f6368; font-size: 13px; text-transform: uppercase; background: #fafafa; }
+        tr:hover { background-color: #f8f9fa; }
+        .btn-text { background: none; border: none; color: #1a73e8; font-weight: 500; cursor: pointer; padding: 6px 12px; border-radius: 4px; }
+        .btn-text:hover { background-color: #e8f0fe; }
+    </style>
+</head>
+<body>
+    <div id="sidebar-container"></div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">View Customers</div>
+            <div class="user-info"><span>Admin (SID: 1)</span><div class="avatar">A</div></div>
+        </div>
+
+        <div class="content-container">
+            <div class="table-card">
+                <div class="table-toolbar">
+                    <input type="text" class="search-box" placeholder="🔍 Search customer name, phone or company...">
+                    <button class="btn btn-primary" style="padding: 8px 16px; border-radius: 4px; border: none; background: #1a73e8; color: white; cursor: pointer;">Export List</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CID</th>
+                            <th>Customer Name (cname)</th>
+                            <th>Phone (ctel)</th>
+                            <th>Company name (can be empty)</th>
+                            <th>Delivery Address (caddr)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Chan Tai Man</td>
+                            <td>91234567</td>
+                            <td>-</td>
+                            <td>Flat A, 15/F, Block 2, City One, Shatin</td>
+                            <td><button class="btn-text">View Details</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Li Ka Yan</td>
+                            <td>61239876</td>
+                            <td>Tech Solutions Ltd.</td>
+                            <td>Unit 12, 8/F, Cyberport 1, HK</td>
+                            <td><button class="btn-text">View Details</button></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>張學友 (Cheung Hok Yau)</td>
+                            <td>98765432</td>
+                            <td>-</td>
+                            <td>G/F, 128 Hollywood Road, Central</td>
+                            <td><button class="btn-text">View Details</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="../sidebar.js"></script>
+    <script> loadSidebar('view-customers'); </script>
+</body>
+</html>

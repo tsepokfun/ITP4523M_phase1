@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Customer - Premium Living</title>
+    <!-- 引入共用 CSS -->
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* 沿用表單共用樣式 */
+        .form-card { background: white; border-radius: 16px; padding: 32px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto; width: 100%; }
+        .form-group { margin-bottom: 24px; }
+        .form-label { display: block; font-size: 14px; font-weight: 500; color: #5f6368; margin-bottom: 8px; }
+        .form-control { width: 100%; padding: 12px 16px; border: 1px solid #dadce0; border-radius: 4px; font-size: 15px; transition: 0.2s; outline: none; }
+        .form-control:focus { border: 2px solid #1a73e8; padding: 11px 15px; }
+        textarea.form-control { resize: vertical; min-height: 80px; }
+        
+        /* 兩欄式排版 (適合聯絡資訊) */
+        .form-row { display: flex; gap: 20px; }
+        .form-row .form-group { flex: 1; }
+        
+        .action-buttons { display: flex; gap: 16px; margin-top: 32px; padding-top: 24px; border-top: 1px solid #e0e0e0; justify-content: flex-end; }
+        .btn { padding: 10px 24px; border-radius: 24px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: 0.2s; }
+        .btn-cancel { background: transparent; color: #5f6368; }
+        .btn-cancel:hover { background: #f1f3f4; }
+        .btn-primary { background: #1a73e8; color: white; }
+        .btn-primary:hover { background: #1557b0; }
+    </style>
+</head>
+<body>
+
+    <!-- 側邊欄容器 -->
+    <div id="sidebar-container"></div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">New Customer</div>
+            <div class="user-info"><span>Admin (SID: 1)</span><div class="avatar">A</div></div>
+        </div>
+
+        <div class="content-container">
+            <div class="form-card">
+                <!-- onsubmit 攔截表單提交，觸發 JS 確認框 -->
+                <form id="customerForm" onsubmit="createCustomer(event)">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Customer Name / cname <span style="color:#d93025">*</span></label>
+                            <input type="text" class="form-control" placeholder="example: Chan Tai Man" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Company Name / company (Optional)</label>
+                            <input type="text" class="form-control" placeholder="e.g., ABC Trading Co. Ltd.">
+                            <small style="color: #5f6368; display: block; margin-top: 4px;">If this is a B2B customer, please fill this in.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Contact Number / ctel <span style="color:#d93025">*</span></label>
+                            <input type="tel" class="form-control" placeholder="e.g., 98765432" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password / cpassword <span style="color:#d93025">*</span></label>
+                            <input type="password" class="form-control" placeholder="Set initial login password" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Delivery/Contact Address (Address / caddr) <span style="color:#d93025">*</span></label>
+                        <textarea class="form-control" placeholder="Please enter the complete delivery address..." required></textarea>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="button" class="btn btn-cancel" onclick="cancelCreation()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 載入 Sidebar JS -->
+    <script src="../sidebar.js"></script>
+    <script>
+        // 假設你在 sidebar.js 裡有加上 create-customer 的判斷，有的話傳入 'create-customer' 讓他 highlight
+        loadSidebar('create-customer'); 
+
+        function createCustomer(event) {
+            event.preventDefault(); // 防止頁面跳轉
+            if(confirm("creating new customer file in the database (Customers table).\nAre you sure you want to continue?")) {
+                alert("Create successful! (Customer created successfully!)\nSystem has automatically generated Client ID (cid).");
+                document.getElementById('customerForm').reset(); // 成功後清空表單
+            }
+        }
+
+        function cancelCreation() {
+            if(confirm('Are you sure you want to cancel the creation? All unsaved data will be lost.')) {
+                window.location = '/Staff/dashboard.html'; // 返回儀表板主頁
+            }
+        }
+    </script>
+</body>
+</html>

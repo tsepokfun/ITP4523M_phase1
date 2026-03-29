@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Premium Living backend management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .logo-area {
+            font-size: 20px;
+            font-weight: 500;
+            color: #1e3a5f;
+            padding: 0 16px 24px 16px;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 24px;
+        }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #5f6368;
+            padding: 8px 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 10px 16px;
+            margin: 2px 8px;
+            border-radius: 24px;
+            color: #202124;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .nav-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .nav-item.active {
+            background-color: #e8f0fe;
+            color: #1a73e8;
+        }
+
+        /* 頂部與主內容 */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .top-bar {
+            background-color: #ffffff;
+            padding: 12px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 500;
+            color: #202124;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #1a73e8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+        }
+
+        /* 儀表板卡片 */
+        .content-container {
+            padding: 24px 32px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 500;
+            color: #1a73e8;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #5f6368;
+        }
+
+        /* 快捷操作區 */
+        .quick-actions {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 32px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: #202124;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn {
+            background-color: #f8f9fa;
+            border: 1px solid #dadce0;
+            padding: 8px 20px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1a73e8;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background-color: #1a73e8;
+            border-color: #1a73e8;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1557b0;
+        }
+
+        .btn:hover {
+            background-color: #e8e8e8;
+        }
+
+        /* 最近訂單表格 */
+        .recent-orders {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            font-weight: 500;
+            color: #5f6368;
+            font-size: 13px;
+        }
+
+        .status-badge {
+            background-color: #e6f4ea;
+            color: #137333;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    </style>
+    </style>
+</head>
+
+<body>
+    <div id="sidebar-container"></div>
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">Dashboard</div>
+            <div class="user-info"><span>Admin (SID: 1)</span>
+                <div class="avatar">A</div>
+            </div>
+        </div>
+
+        <div class="content-container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">42</div>
+                    <div class="stat-label">Total Orders</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Furniture Types</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Low Stock Materials</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Pending Today</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="main-content">
+
+
+            <!-- 快速操作捷徑 -->
+            <div class="quick-actions">
+                <div class="section-title">⚡ Quick Actions</div>
+                <div class="button-group">
+                    <a class="btn btn-primary" href="Create/createFurniture.html">➕ Create Furniture</a>
+                    <a class="btn btn-primary" href="Create/createMaterial.html">📦 Create Material</a>
+                    <a class="btn" href="View/viewMaterials.html">⚠️ Low Stock Alerts</a>
+                    <a class="btn" href="reports.html">🚚 Today's Shipment Orders</a>
+                </div>
+            </div>
+
+            <!-- 最近訂單預覽 (靜態範例 + 模擬刪除/更新確認) -->
+            <div class="recent-orders">
+                <div class="section-title">📋 Recent 5 Orders</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>order ID</th>
+                            <th>customer</th>
+                            <th>total Amount</th>
+                            <th>status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#1001</td>
+                            <td>Chan Tai Man</td>
+                            <td>$4,500</td>
+                            <td><span class="status-badge">Processing</span></td>
+
+                        </tr>
+                        <tr>
+                            <td>#1002</td>
+                            <td>Lee Hui</td>
+                            <td>$12,800</td>
+                            <td><span class="status-badge">Prepareing</span></td>
+
+                        </tr>
+                        <tr>
+                            <td>#1003</td>
+                            <td>張學友 (Cheung Hok Yau)</td>
+                            <td>$3,200</td>
+                            <td><span class="status-badge">Delivered</span></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="sidebar.js"></script>
+    <script>
+        // 呼叫函式，並傳入 'dashboard'，這樣主頁的按鈕就會變成藍色 (active)
+        loadSidebar('dashboard');
+    </script>
+    <script>
+        // 模擬「確認對話框」邏輯 – 符合題目要求的 confirm 刪除/更新
+        function deleteOrder(orderId) {
+            if (confirm(`comfrim to delete the Order #${orderId}?\nThis action cannot be undone.`)) {
+                alert(`Order #${orderId} has been deleted (demonstration only, actual API integration required)`);
+                // 這裡未來可以改成 Ajax 刪除，並重新整理表格
+            } else {
+                alert("Deletion cancelled");
+            }
+        }
+
+        function updateOrder(orderId) {
+            let newStatus = prompt("Please enter the new status (Processing / Preparing / Pending / Delivered)", "Delivered");
+            if (newStatus !== null) {
+                alert(`Order #${orderId} status has been updated to "${newStatus}" (demonstration only)`);
+                // actual updates to DOM or send request
+            }
+        }
+
+        // 未來擴充：編輯家具時也會呼叫 confirm
+        function deleteFurniture(fid) {
+            if (confirm(`Confirm to delete furniture with ID ${fid}? This will also affect order records.`)) {
+                alert("Furniture has been deleted (mock)");
+            }
+        }
+    </script>
+</body>
+
+</html>

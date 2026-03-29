@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Furniture - Premium Living</title>
+    <!-- 引入共用的 CSS -->
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* 針對此頁面表格的微調樣式 */
+        .table-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid #e0e0e0; font-size: 14px; }
+        th { font-weight: 500; color: #5f6368; font-size: 13px; text-transform: uppercase; }
+        
+        .price-input { width: 100px; padding: 6px 10px; border: 1px solid #dadce0; border-radius: 4px; outline: none; font-size: 14px; }
+        .price-input:focus { border-color: #1a73e8; }
+        
+        .btn { padding: 6px 16px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: 0.2s; }
+        .btn-update { background-color: #e8f0fe; color: #1a73e8; border-color: #d2e3fc; }
+        .btn-update:hover { background-color: #d2e3fc; }
+        .btn-delete { background-color: transparent; color: #d93025; border-color: #d93025; margin-left: 8px; }
+        .btn-delete:hover { background-color: #fce8e6; }
+    </style>
+</head>
+<body>
+
+    <!-- 側邊欄容器 (由 JS 自動載入) -->
+    <div id="sidebar-container"></div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">Manage Furniture</div>
+            <div class="user-info"><span>Admin</span><div class="avatar">A</div></div>
+        </div>
+
+        <div class="content-container">
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Furniture ID (fid)</th>
+                            <th>Furniture Name (fname)</th>
+                            <th>description</th>
+                            <th>price - HKD</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 模擬 SQL 資料 -->
+                        <tr id="row-fid-1">
+                            <td>#1</td>
+                            <td>Oak Dining Chair</td>
+                            <td style="color: #5f6368;">Classic style dining chair made of solid oak.</td>
+                            <td>
+                                $ <input type="number" id="price-1" class="price-input" value="450.00" step="0.01">
+                            </td>
+                            <td>
+                                <button class="btn btn-update" onclick="updateFurniturePrice(1, 'Oak Dining Chair')">Update Price</button>
+                                <button class="btn btn-delete" onclick="deleteFurniture(1, 'Oak Dining Chair')">Delete</button>
+                            </td>
+                        </tr>
+                        <tr id="row-fid-2">
+                            <td>#2</td>
+                            <td>Large Dining Table</td>
+                            <td style="color: #5f6368;">6-seater dining table, perfect for families.</td>
+                            <td>
+                                $ <input type="number" id="price-2" class="price-input" value="2500.00" step="0.01">
+                            </td>
+                            <td>
+                                <button class="btn btn-update" onclick="updateFurniturePrice(2, 'Large Dining Table')">Update Price</button>
+                                <button class="btn btn-delete" onclick="deleteFurniture(2, 'Large Dining Table')">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入側邊欄 JS -->
+    <script src="../sidebar.js"></script>
+    <script>
+        // 告訴 sidebar.js 現在是 manage-furniture 頁面
+        loadSidebar('manage-furniture');
+
+        // 更新家具價格
+        function updateFurniturePrice(fid, fname) {
+            let newPrice = document.getElementById(`price-${fid}`).value;
+            if(confirm(`Are you sure you want to update the price of "${fname}" to HKD $${newPrice}?`)) {
+                alert(`Update successful!\nFurniture ID: ${fid} has been updated to $${newPrice}.`);
+            }
+        }
+
+        // 刪除家具
+        function deleteFurniture(fid, fname) {
+            if(confirm(`⚠️ warning: Are you sure you want to permanently delete furniture "${fname} (FID: ${fid})"?\nThis may affect the furniture's historical orders.`)) {
+                document.getElementById(`row-fid-${fid}`).style.display = 'none';
+                alert(`Furniture ${fname} has been deleted successfully.`);
+            }
+        }
+    </script>
+</body>
+</html>

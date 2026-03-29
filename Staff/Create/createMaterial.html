@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Material - Premium Living</title>
+    <!-- 引入共用 CSS -->
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* 沿用與家具表單相同的樣式 */
+        .form-card { background: white; border-radius: 16px; padding: 32px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto; width: 100%; }
+        .form-group { margin-bottom: 24px; }
+        .form-label { display: block; font-size: 14px; font-weight: 500; color: #5f6368; margin-bottom: 8px; }
+        .form-control { width: 100%; padding: 12px 16px; border: 1px solid #dadce0; border-radius: 4px; font-size: 15px; transition: 0.2s; outline: none; }
+        .form-control:focus { border: 2px solid #1a73e8; padding: 11px 15px; }
+        
+        .action-buttons { display: flex; gap: 16px; margin-top: 32px; padding-top: 24px; border-top: 1px solid #e0e0e0; justify-content: flex-end; }
+        .btn { padding: 10px 24px; border-radius: 24px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: 0.2s; }
+        .btn-cancel { background: transparent; color: #5f6368; }
+        .btn-cancel:hover { background: #f1f3f4; }
+        .btn-primary { background: #1a73e8; color: white; }
+        .btn-primary:hover { background: #1557b0; }
+
+        /* 物料單位的特別排版 */
+        .input-group { display: flex; gap: 12px; }
+    </style>
+</head>
+<body>
+
+    <!-- 側邊欄容器 -->
+    <div id="sidebar-container"></div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">Create Material</div>
+            <div class="user-info"><span>Admin (SID: 1)</span><div class="avatar">A</div></div>
+        </div>
+
+        <div class="content-container">
+            <div class="form-card">
+                <form id="materialForm" onsubmit="createMaterial(event)">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Material Name / mname</label>
+                        <input type="text" class="form-control" placeholder="e.g., Premium Leather" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Initial Quantity & Unit / mqty, munit</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" placeholder="quantities (e.g., 100)" min="0" required style="flex: 2;">
+                            <select class="form-control" required style="flex: 1;">
+                                <option value="" disabled selected>Unit</option>
+                                <option value="pcs">pcs</option>
+                                <option value="meter">meter</option>
+                                <option value="block">block</option>
+                                <option value="kg">kg</option>
+                                <option value="roll">roll</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="button" class="btn btn-cancel" onclick="if(confirm('confirm to cancel?')) window.location='/Staff/dashboard.html';">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 載入 Sidebar JS 並設定目前頁面為 'create-material' -->
+    <script src="../sidebar.js"></script>
+    <script>
+        loadSidebar('create-material');
+
+        function createMaterial(event) {
+            event.preventDefault(); 
+            if(confirm("Confirm to insert data into Materials table?")) {
+                alert("Material created successfully! Inventory has been updated.");
+                document.getElementById('materialForm').reset(); // 清空表單
+            }
+        }
+    </script>
+</body>
+</html>

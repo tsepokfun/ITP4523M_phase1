@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Reports - Premium Living</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', system-ui, sans-serif; }
+        body { background-color: #f5f5f5; display: flex; height: 100vh; overflow: hidden; }
+        .sidebar { width: 280px; background-color: #ffffff; box-shadow: 2px 0 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; padding: 24px 16px; z-index: 10; }
+        .logo-area { font-size: 20px; font-weight: 500; color: #1e3a5f; padding: 0 16px 24px 16px; border-bottom: 1px solid #e0e0e0; margin-bottom: 24px; }
+        .nav-section { margin-bottom: 32px; }
+        .nav-title { font-size: 13px; font-weight: 500; color: #5f6368; padding: 8px 16px; text-transform: uppercase; }
+        .nav-item { display: block; padding: 10px 16px; margin: 2px 8px; border-radius: 24px; color: #202124; text-decoration: none; font-size: 14px; font-weight: 500; }
+        .nav-item:hover { background-color: #f0f0f0; }
+        .nav-item.active { background-color: #e8f0fe; color: #1a73e8; }
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        .top-bar { background-color: #ffffff; padding: 12px 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e0e0e0; }
+        
+        .content-container { padding: 24px 32px; }
+        
+        /* 報表卡片網格 */
+        .report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .report-card { background: white; border-radius: 12px; padding: 24px; border: 1px solid #e0e0e0; transition: box-shadow 0.2s; display: flex; flex-direction: column; }
+        .report-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: white; }
+        
+        .report-icon { font-size: 32px; margin-bottom: 16px; }
+        .report-title { font-size: 16px; font-weight: 500; color: #202124; margin-bottom: 8px; }
+        .report-desc { font-size: 14px; color: #5f6368; line-height: 1.5; margin-bottom: 24px; flex-grow: 1; }
+        
+        .btn-generate { background-color: #1a73e8; color: white; padding: 10px 0; width: 100%; border-radius: 6px; border: none; font-size: 14px; font-weight: 500; cursor: pointer; transition: 0.2s; }
+        .btn-generate:hover { background-color: #1557b0; }
+    </style>
+</head>
+<body>
+    <div id="sidebar-container"></div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div style="font-size: 22px; font-weight: 500;">Generate Reports</div>
+        </div>
+
+        <div class="content-container">
+            <div class="report-grid">
+                
+                <!-- 報表卡片 1 -->
+                <div class="report-card">
+                    <div class="report-icon">📦</div>
+                    <div class="report-title">Raw Materials / Products Transfer Form</div>
+                    <div class="report-desc">Used by Inventory Department to record movement of raw materials and finished products.</div>
+                    <button class="btn-generate" onclick="generateReport('Transfer Form')">Generate Report</button>
+                </div>
+
+                <!-- 報表卡片 2 -->
+                <div class="report-card">
+                    <div class="report-icon">🚚</div>
+                    <div class="report-title">Delivery Note</div>
+                    <div class="report-desc">Issued by Logistics Department to accompany goods during transit and upon delivery.</div>
+                    <button class="btn-generate" onclick="generateReport('Delivery Note')">Generate Report</button>
+                </div>
+
+                <!-- 報表卡片 3 -->
+                <div class="report-card">
+                    <div class="report-icon">🧾</div>
+                    <div class="report-title">Invoice</div>
+                    <div class="report-desc">Official billing document issued to customers containing ordered items, unit cost, and total price.</div>
+                    <button class="btn-generate" onclick="generateReport('Invoice')">Generate Report</button>
+                </div>
+
+                <!-- 報表卡片 4 -->
+                <div class="report-card">
+                    <div class="report-icon">✍️</div>
+                    <div class="report-title">Reply Slip</div>
+                    <div class="report-desc">Signed by the customer to confirm successful receipt and completion of the shipment.</div>
+                    <button class="btn-generate" onclick="generateReport('Reply Slip')">Generate Report</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateReport(reportName) {
+            let userConfirm = confirm(`system will generate ${reportName} report.\nAre you sure you want to continue? (Generate this report?)`);
+            if(userConfirm) {
+                // 原型展示：呼叫瀏覽器原生的列印功能來模擬 "Generate Report" 行為
+                alert(`${reportName} is ready, entering preview/print mode.`);
+                window.print(); 
+            }
+        }
+    </script>
+    <script src="sidebar.js"></script>
+    <script>
+        // 呼叫函式，並傳入 'dashboard'，這樣主頁的按鈕就會變成藍色 (active)
+        loadSidebar('dashboard');
+    </script>
+</body>
+</html>

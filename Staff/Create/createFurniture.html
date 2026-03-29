@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Furniture - Premium Living</title>
+    <!-- 1. 引入共用 CSS -->
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* 表單專用樣式 (可考慮未來也放進 style.css) */
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #5f6368;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 15px;
+            transition: 0.2s;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border: 2px solid #1a73e8;
+            padding: 11px 15px;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* 複選物料區塊 */
+        .material-box {
+            padding: 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+
+        .material-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .material-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .material-qty {
+            width: 80px;
+            padding: 6px 10px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #e0e0e0;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            color: #5f6368;
+        }
+
+        .btn-cancel:hover {
+            background: #f1f3f4;
+        }
+
+        .btn-primary {
+            background: #1a73e8;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1557b0;
+        }
+
+        /* 圖片上傳區塊樣式 */
+        .upload-area {
+            border: 2px dashed #dadce0;
+            border-radius: 8px;
+            padding: 32px;
+            text-align: center;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+        }
+
+        .upload-area:hover {
+            border-color: #1a73e8;
+            /* Hover 時變成 Google 藍色 */
+            background-color: #f0f4f9;
+            /* 背景微藍 */
+        }
+
+        /* 確保你原本的 material-box 也有基本的樣式 (若沒有的話) */
+        .material-box {
+            padding: 16px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            background: #f8f9fa;
+        }
+
+        .material-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .material-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .material-qty {
+            width: 100px;
+            padding: 6px 10px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .material-qty:focus {
+            border-color: #1a73e8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 2. 側邊欄容器 -->
+    <div id="sidebar-container"></div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">Create Furniture</div>
+            <div class="user-info"><span>Admin (SID: 1)</span>
+                <div class="avatar">A</div>
+            </div>
+        </div>
+
+        <div class="content-container">
+            <div class="form-card">
+                <form id="furnitureForm" onsubmit="createFurniture(event)" enctype="multipart/form-data">
+
+                    <!-- 1. 新增的圖片上傳區塊 -->
+                    <div class="form-group">
+                        <label class="form-label">Furniture Image / fimage</label>
+
+                        <!-- 點擊這個區域會觸發隱藏的 file input -->
+                        <div class="upload-area" id="uploadArea"
+                            onclick="document.getElementById('furnitureImage').click()">
+                            <!-- 隱藏的實際輸入框 -->
+                            <input type="file" id="furnitureImage" accept="image/png, image/jpeg" style="display: none;"
+                                onchange="previewImage(event)">
+
+                            <!-- 上傳前的提示文字與圖示 -->
+                            <div id="uploadPlaceholder">
+                                <div style="font-size: 28px; margin-bottom: 8px;">🖼️</div>
+                                <div style="color: #1a73e8; font-weight: 500; font-size: 15px; margin-bottom: 4px;">
+                                    Click to upload image</div>
+                                <div style="font-size: 12px; color: #5f6368;">PNG, JPG up to 5MB</div>
+                            </div>
+
+                            <!-- 上傳後的圖片預覽 (預設隱藏) -->
+                            <img id="imagePreview" src="#" alt="Preview"
+                                style="display: none; max-width: 100%; max-height: 200px; border-radius: 8px; object-fit: cover; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                        </div>
+                    </div>
+
+                    <!-- 原本的家具名稱 -->
+                    <div class="form-group">
+                        <label class="form-label">Furniture Name / fname</label>
+                        <input type="text" class="form-control" placeholder="e.g., Leather Recliner Sofa" required>
+                    </div>
+
+                    <!-- 原本的價格 -->
+                    <div class="form-group">
+                        <label class="form-label">Price HKD / fprice</label>
+                        <input type="number" class="form-control" placeholder="e.g., 5200.00" step="0.01" min="0"
+                            required>
+                    </div>
+
+                    <!-- 原本的描述 -->
+                    <div class="form-group">
+                        <label class="form-label">Description / fdesc</label>
+                        <textarea class="form-control" placeholder="Enter detailed description and specifications..."
+                            required></textarea>
+                    </div>
+
+                    <!-- 原本的物料 -->
+                    <div class="form-group">
+                        <label class="form-label">Production Required Materials (Required Materials /
+                            FurnitureMaterials)</label>
+                        <div class="material-box">
+                            <div class="material-item">
+                                <label><input type="checkbox" id="mat1"> MID: 1 - Oak Wood Plank (pcs)</label>
+                                <input type="number" class="material-qty" placeholder="Quantity" min="1">
+                            </div>
+                            <div class="material-item">
+                                <label><input type="checkbox" id="mat2"> MID: 2 - Steel Tube (meter)</label>
+                                <input type="number" class="material-qty" placeholder="Quantity" min="1">
+                            </div>
+                            <div class="material-item">
+                                <label><input type="checkbox" id="mat3"> MID: 3 - Fabric Cloth (meter)</label>
+                                <input type="number" class="material-qty" placeholder="Quantity" min="1">
+                            </div>
+                            <div class="material-item">
+                                <label><input type="checkbox" id="mat4"> MID: 4 - High Density Foam (block)</label>
+                                <input type="number" class="material-qty" placeholder="Quantity" min="1">
+                            </div>
+                        </div>
+                        <small style="color: #5f6368; display: block; margin-top: 8px;">Select required materials and
+                            enter consumption quantities.</small>
+                    </div>
+
+                    <!-- 原本的按鈕 -->
+                    <div class="action-buttons">
+                        <button type="button" class="btn btn-cancel"
+                            onclick="if(confirm('Confirm to cancel?')) window.location='/Staff/dashboard.html';">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. 載入 Sidebar JS 並設定目前頁面為 'create-furniture' -->
+    <script src="../sidebar.js"></script>
+    <script>
+        loadSidebar('create-furniture');
+
+        function createFurniture(event) {
+            event.preventDefault(); // 阻止頁面刷新
+            if (confirm("  Confirm to insert data into Furnitures table?")) {
+                alert("Furniture created successfully!");
+                document.getElementById('furnitureForm').reset();
+            }
+        }
+    </script>
+</body>
+
+</html>

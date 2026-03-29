@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+
+<head>
+    <meta charset="UTF-8">
+    <title>New Order - Premium Living</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* 同上 CSS... */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: #ffffff;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 16px;
+        }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #5f6368;
+            padding: 8px 16px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 10px 16px;
+            margin: 2px 8px;
+            border-radius: 24px;
+            color: #202124;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-item.active {
+            background-color: #e8f0fe;
+            color: #1a73e8;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .top-bar {
+            background-color: #ffffff;
+            padding: 12px 32px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* 表單 CSS */
+        .content-container {
+            padding: 24px 32px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #5f6368;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border: 2px solid #1a73e8;
+            padding: 9px 13px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: flex-end;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            color: #5f6368;
+        }
+
+        .btn-cancel:hover {
+            background: #f1f3f4;
+        }
+
+        .btn-primary {
+            background: #1a73e8;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1557b0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sidebar-container"></div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div style="font-size: 22px; font-weight: 500;">Create Order</div>
+        </div>
+
+        <div class="content-container">
+            <div class="form-card">
+                <form id="orderForm" onsubmit="createOrder(event)">
+
+                    <div class="form-group">
+                        <label class="form-label">Select Customer (Customer ID / cid)</label>
+                        <select class="form-control" required>
+                            <option value="">-- Please select a customer --</option>
+                            <option value="1">CID: 1 - Chen Xiaoming (0912-345-678)</option>
+                            <option value="2">CID: 2 - Li Hua (Company XYZ)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Delivery Date (Delivery Date / odeliverydate)</label>
+                        <input type="date" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Delivery Address (Delivery Address / odeliveraddress)</label>
+                        <textarea class="form-control" rows="3" placeholder="Please enter the complete address" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Purchase Furniture Items (OrderFurnitures: fid & qty)</label>
+                        <div style="padding: 16px; border: 1px solid #e0e0e0; border-radius: 4px; background: #f8f9fa;">
+                            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                <select class="form-control" style="flex: 2;">
+                                    <option>FID: 1 - Oak Dining Chair ($450)</option>
+                                    <option>FID: 2 - Large Dining Table ($2500)</option>
+                                </select>
+                                <input type="number" class="form-control" placeholder="Quantity" style="flex: 1;"
+                                    min="1" value="1">
+                            </div>
+                            <!-- 模擬新增更多按鈕 -->
+                            <button type="button" class="btn btn-cancel" style="padding: 6px 12px; font-size: 13px;">+
+                                Add Item</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="button" class="btn btn-cancel"
+                            onclick="if(confirm('Are you sure you want to cancel?')) window.location='/Staff/dashboard.html';">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../sidebar.js"></script>
+
+    <script>
+        // 呼叫函式，並傳入 'dashboard'，這樣主頁的按鈕就會變成藍色 (active)
+        loadSidebar('dashboard');
+    </script>
+
+    <script>
+        function createOrder(event) {
+            event.preventDefault(); // 阻擋表單重整
+            if (confirm("Are you sure you want to create this order?\n(The system will automatically generate an Order ID and record the timestamp)")) {
+                alert("Order created successfully! The total amount has been automatically calculated and written to the database (ototalamount).");
+                document.getElementById('orderForm').reset();
+            }
+        }
+    </script>
+
+</body>
+
+</html>

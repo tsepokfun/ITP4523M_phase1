@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <title>View Furniture - Premium Living</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .table-card { background: white; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden; }
+        .table-toolbar { padding: 16px 24px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; background: #fff; }
+        .search-box { padding: 8px 16px; border: 1px solid #dadce0; border-radius: 24px; width: 300px; font-size: 14px; outline: none; transition: 0.2s; }
+        .search-box:focus { border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26,115,232,0.2); }
+        
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 12px 24px; border-bottom: 1px solid #e0e0e0; font-size: 14px; vertical-align: middle; }
+        th { font-weight: 500; color: #5f6368; font-size: 13px; text-transform: uppercase; background: #fafafa; }
+        tr:hover { background-color: #f8f9fa; }
+        
+        /* 商品圖片縮圖樣式 */
+        .img-thumbnail { 
+            width: 56px; 
+            height: 56px; 
+            object-fit: cover; /* 確保圖片不變形地填滿方形 */
+            border-radius: 8px; 
+            border: 1px solid #e0e0e0;
+            background-color: #f5f5f5; /* 圖片載入前的底色 */
+            display: block;
+        }
+
+        .price-text { font-weight: 500; color: #1a73e8; }
+        .btn-text { background: none; border: none; color: #1a73e8; font-weight: 500; cursor: pointer; padding: 6px 12px; border-radius: 4px; transition: 0.2s; }
+        .btn-text:hover { background-color: #e8f0fe; }
+    </style>
+</head>
+<body>
+    <!-- 左側欄容器 -->
+    <div id="sidebar-container"></div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">View Furnitures</div>
+            <div class="user-info"><span>Admin (SID: 1)</span><div class="avatar">A</div></div>
+        </div>
+
+        <div class="content-container">
+            <div class="table-card">
+                <div class="table-toolbar">
+                    <input type="text" class="search-box" placeholder="🔍 Search furniture name (fname)...">
+                    <button class="btn btn-primary" style="padding: 8px 16px; border-radius: 4px; border: none; background: #1a73e8; color: white; cursor: pointer; font-weight:500;">Export Catalog</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">FID</th>
+                            <th style="width: 80px;">Image</th>
+                            <th style="width: 200px;">Furniture Name (fname)</th>
+                            <th>Description (fdesc)</th>
+                            <th style="width: 120px;">Price (fprice)</th>
+                            <th style="width: 150px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 1. 木椅 -->
+                        <tr>
+                            <td style="font-weight: 500; color:#5f6368;">#1</td>
+                            <td><img src="/image/1.png" alt="Oak Dining Chair" class="img-thumbnail" onerror="this.src='https://via.placeholder.com/56?text=Img'"></td>
+                            <td style="font-weight: 500; color: #202124;">Oak Dining Chair</td>
+                            <td style="color: #5f6368;">Classic style dining chair made of solid oak.</td>
+                            <td class="price-text">$450.00</td>
+                            <td><button class="btn-text">BOM</button></td>
+                        </tr>
+                        
+                        <!-- 2. 木桌 -->
+                        <tr>
+                            <td style="font-weight: 500; color:#5f6368;">#2</td>
+                            <td><img src="/image/2.png" alt="Large Dining Table" class="img-thumbnail" onerror="this.src='https://via.placeholder.com/56?text=Img'"></td>
+                            <td style="font-weight: 500; color: #202124;">Large Dining Table</td>
+                            <td style="color: #5f6368;">6-seater dining table, perfect for families.</td>
+                            <td class="price-text">$2,500.00</td>
+                            <td><button class="btn-text">BOM</button></td>
+                        </tr>
+                        
+                        <!-- 3. 布沙發 -->
+                        <tr>
+                            <td style="font-weight: 500; color:#5f6368;">#3</td>
+                            <td><img src="/image/3.png" alt="2-Seater Fabric Sofa" class="img-thumbnail" onerror="this.src='https://via.placeholder.com/56?text=Img'"></td>
+                            <td style="font-weight: 500; color: #202124;">3-Seater Fabric Sofa</td>
+                            <td style="color: #5f6368;">Comfortable grey fabric sofa with foam filling.</td>
+                            <td class="price-text">$3,800.00</td>
+                            <td><button class="btn-text">BOM</button></td>
+                        </tr>
+                        
+                        <!-- 4. 木衣櫃 -->
+                        <tr>
+                            <td style="font-weight: 500; color:#5f6368;">#4</td>
+                            <td><img src="/image/4.png" alt="Wooden Wardrobe" class="img-thumbnail" onerror="this.src='https://via.placeholder.com/56?text=Img'"></td>
+                            <td style="font-weight: 500; color: #202124;">Wooden Wardrobe</td>
+                            <td style="color: #5f6368;">Double door wardrobe with hanging space.</td>
+                            <td class="price-text">$1,800.00</td>
+                            <td><button class="btn-text">BOM</button></td>
+                        </tr>
+
+                        <!-- 5. 書架 (從 SQL 補齊) -->
+                        <tr>
+                            <td style="font-weight: 500; color:#5f6368;">#5</td>
+                            <td><img src="/image/5.png" alt="Industrial Bookshelf" class="img-thumbnail" onerror="this.src='https://via.placeholder.com/56?text=Img'"></td>
+                            <td style="font-weight: 500; color: #202124;">Industrial Bookshelf</td>
+                            <td style="color: #5f6368;">Modern style bookshelf with steel frame.</td>
+                            <td class="price-text">$1,200.00</td>
+                            <td><button class="btn-text">BOM</button></td>
+                        </tr>
+
+                        <!-- 6. 木床架 (從 SQL 補齊) -->
+                        <tr>
+                            <td style="font-weight: 500; color:#5f6368;">#6</td>
+                            <td><img src="/image/6.png" alt="Bed Frame" class="img-thumbnail" onerror="this.src='https://via.placeholder.com/56?text=Img'"></td>
+                            <td style="font-weight: 500; color: #202124;">Queen Size Bed Frame</td>
+                            <td style="color: #5f6368;">Sturdy bed frame for queen size mattress.</td>
+                            <td class="price-text">$2,200.00</td>
+                            <td><button class="btn-text">BOM</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 載入 Sidebar JS -->
+    <script src="../sidebar.js"></script>
+    <script>
+        loadSidebar('view-furniture'); 
+    </script>
+</body>
+</html>

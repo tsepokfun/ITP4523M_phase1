@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Orders - Premium Living</title>
+    <link rel="stylesheet" href="../style.css">
+    <!-- 建議將上面 index.html 的 <style> 內容直接複製到這裡，為了簡潔下方我只放新增的樣式 -->
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: #f5f5f5; display: flex; height: 100vh; overflow: hidden; }
+        .sidebar { width: 280px; background-color: #ffffff; box-shadow: 2px 0 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; padding: 24px 16px; overflow-y: auto; }
+        .nav-section { margin-bottom: 24px; } .nav-title { font-size: 13px; font-weight: 500; color: #5f6368; padding: 8px 16px; } .nav-item { display: block; padding: 10px 16px; margin: 2px 8px; border-radius: 24px; color: #202124; text-decoration: none; font-size: 14px; font-weight: 500;} .nav-item:hover { background-color: #f0f0f0; } .nav-item.active { background-color: #e8f0fe; color: #1a73e8; }
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        .top-bar { background-color: #ffffff; padding: 12px 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e0e0e0; }
+        
+        /* 表格與表單元素 */
+        .content-container { padding: 24px 32px; }
+        .table-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid #e0e0e0; font-size: 14px; }
+        th { font-weight: 500; color: #5f6368; font-size: 13px; text-transform: uppercase; }
+        
+        .form-select { padding: 8px 12px; border: 1px solid #dadce0; border-radius: 4px; font-size: 14px; outline: none; background: white; }
+        .form-select:focus { border-color: #1a73e8; }
+        
+        .btn { padding: 6px 16px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: 0.2s; }
+        .btn-update { background-color: #e8f0fe; color: #1a73e8; border-color: #d2e3fc; }
+        .btn-update:hover { background-color: #d2e3fc; }
+        .btn-delete { background-color: transparent; color: #d93025; border-color: #d93025; margin-left: 8px; }
+        .btn-delete:hover { background-color: #fce8e6; }
+    </style>
+</head>
+<body>
+    <!-- 左側欄 (同上，為節省空間這裡省略部分 a 標籤，請確保包含 🔄 訂單狀態管理 並設為 active) -->
+    <div id="sidebar-container"></div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div style="font-size: 22px; font-weight: 500;">Manage Orders</div>
+            <div class="user-info"><span>Admin (SID: 1)</span><div class="avatar">A</div></div>
+        </div>
+
+        <div class="content-container">
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID (oid)</th>
+                            <th>Customer (cid)</th>
+                            <th>Delivery Date</th>
+                            <th>Total Amount</th>
+                            <th>Status (ostatus)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="order-1001">
+                            <td>#1001</td>
+                            <td>CID: 2 </td>
+                            <td>2025-10-20</td>
+                            <td>$12,800.00</td>
+                            <td>
+                                <!-- ostatus 在 DB 是 INT (1,2,3)，我們用 select 對應 -->
+                                <select id="status-1001" class="form-select">
+                                    <option value="1" selected>Processing</option>
+                                    <option value="2">Preparing</option>
+                                    <option value="3">Shipped</option>
+                                    <option value="4">Delivered</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button class="btn btn-update" onclick="updateOrder(1001)">Save Changes</button>
+                                <button class="btn btn-delete" onclick="deleteOrder(1001)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr id="order-1002">
+                            <td>#1002</td>
+                            <td>CID: 5 </td>
+                            <td>2025-10-22</td>
+                            <td>$3,200.00</td>
+                            <td>
+                                <select id="status-1002" class="form-select">
+                                    <option value="1">Processing </option>
+                                    <option value="2">Preparing</option>
+                                    <option value="3" selected>Shipped</option>
+                                    <option value="4">Delivered</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button class="btn btn-update" onclick="updateOrder(1002)">Save Changes</button>
+                                <button class="btn btn-delete" onclick="deleteOrder(1002)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="../sidebar.js"></script>
+    <script>
+        // 呼叫函式，並傳入 'dashboard'，這樣主頁的按鈕就會變成藍色 (active)
+        loadSidebar('dashboard');
+    </script>
+    <script>
+        function updateOrder(oid) {
+            // 抓取下拉選單目前選中的值與文字
+            let selectElement = document.getElementById(`status-${oid}`);
+            let statusText = selectElement.options[selectElement.selectedIndex].text;
+            
+            if(confirm(`Are you sure you want to update the status of order #${oid} to "${statusText}"?`)) {
+                alert(`Update successful!\nOrder #${oid} status has been changed to ${statusText}.`);
+                // 這裡在真實系統會送出 AJAX 更新資料庫的 ostatus
+            }
+        }
+
+        function deleteOrder(oid) {
+            if(confirm(`⚠️ warning: Are you sure you want to permanently delete order #${oid}?\nThe associated OrderFurnitures will also be deleted.`)) {
+                document.getElementById(`order-${oid}`).style.display = 'none';
+                alert(`Order #${oid} has been deleted.`);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Customers - Premium Living</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .table-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 900px; }
+        th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid #e0e0e0; vertical-align: middle; }
+        th { font-weight: 500; color: #5f6368; font-size: 13px; text-transform: uppercase; }
+        
+        /* 行內編輯的輸入框樣式 */
+        .inline-input { width: 100%; padding: 8px; border: 1px solid #dadce0; border-radius: 4px; font-size: 14px; outline: none; transition: 0.2s; background-color: #f8f9fa; }
+        .inline-input:focus { border-color: #1a73e8; background-color: #ffffff; box-shadow: 0 0 0 2px rgba(26,115,232,0.2); }
+        
+        .btn { padding: 8px 12px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: 0.2s; white-space: nowrap; }
+        .btn-update { background-color: #e8f0fe; color: #1a73e8; }
+        .btn-update:hover { background-color: #d2e3fc; }
+        .btn-delete { background-color: transparent; color: #d93025; margin-left: 4px; }
+        .btn-delete:hover { background-color: #fce8e6; }
+    </style>
+</head>
+<body>
+
+    <div id="sidebar-container"></div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">Manage Customers</div>
+            <div class="user-info"><span>Admin (SID: 1)</span><div class="avatar">A</div></div>
+        </div>
+
+        <div class="content-container">
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">CID</th>
+                            <th style="width: 150px;">Name (cname)</th>
+                            <th style="width: 150px;">Company (company)</th>
+                            <th style="width: 150px;">Phone (ctel)</th>
+                            <th>Address (caddr)</th>
+                            <th style="width: 160px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="row-cid-1">
+                            <td><span style="font-weight: 500; color:#5f6368;">#1</span></td>
+                            <td><input type="text" id="cname-1" class="inline-input" value="Chan Tai Man"></td>
+                            <td><input type="text" id="company-1" class="inline-input" value="ABC Trading Ltd."></td>
+                            <td><input type="tel" id="ctel-1" class="inline-input" value="91234567"></td>
+                            <td><input type="text" id="caddr-1" class="inline-input" value="Flat A, 15/F, Block 2, City One, Shatin"></td>
+                            <td>
+                                <button class="btn btn-update" onclick="updateCustomer(1)">Save</button>
+                                <button class="btn btn-delete" onclick="deleteCustomer(1)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr id="row-cid-2">
+                            <td><span style="font-weight: 500; color:#5f6368;">#2</span></td>
+                            <td><input type="text" id="cname-2" class="inline-input" value="Lee Siu Ling"></td>
+                            <td><input type="text" id="company-2" class="inline-input" placeholder="None"></td>
+                            <td><input type="tel" id="ctel-2" class="inline-input" value="65432109"></td>
+                            <td><input type="text" id="caddr-2" class="inline-input" value="Kowloon Wong Tai Sin Nathan Road 456 Floor 7"></td>
+                            <td>
+                                <button class="btn btn-update" onclick="updateCustomer(2)">Save</button>
+                                <button class="btn btn-delete" onclick="deleteCustomer(2)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="../sidebar.js"></script>
+    <script>
+        loadSidebar('manage-customers'); // 對應你側邊欄設定的 active key
+
+        function updateCustomer(cid) {
+            let name = document.getElementById(`cname-${cid}`).value;
+            if(confirm(`comfrim to save changes for customer CID: ${cid} (${name})?`)) {
+                alert(`Update successful!\nCustomer data in the database has been updated for CID: ${cid}.`);
+            }
+        }
+
+        function deleteCustomer(cid) {
+            let name = document.getElementById(`cname-${cid}`).value;
+            if(confirm(`⚠️ warning: Are you sure you want to permanently delete customer "${name}"?\nThis may affect the customer's historical orders (Orders)!`)) {
+                document.getElementById(`row-cid-${cid}`).style.display = 'none';
+                alert(`Customer ${name} has been deleted successfully.`);
+            }
+        }
+    </script>
+</body>
+</html>

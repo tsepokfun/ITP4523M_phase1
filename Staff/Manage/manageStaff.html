@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Staff - Premium Living</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .table-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid #e0e0e0; vertical-align: middle; }
+        th { font-weight: 500; color: #5f6368; font-size: 13px; text-transform: uppercase; }
+        
+        /* 行內編輯樣式 */
+        .inline-input, .inline-select { width: 100%; padding: 8px; border: 1px solid #dadce0; border-radius: 4px; font-size: 14px; outline: none; background-color: #f8f9fa; transition: 0.2s; }
+        .inline-input:focus, .inline-select:focus { border-color: #1a73e8; background-color: #ffffff; box-shadow: 0 0 0 2px rgba(26,115,232,0.2); }
+        
+        .btn { padding: 8px 12px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: 0.2s; white-space: nowrap; }
+        .btn-update { background-color: #e8f0fe; color: #1a73e8; }
+        .btn-update:hover { background-color: #d2e3fc; }
+        .btn-delete { background-color: transparent; color: #d93025; margin-left: 4px; }
+        .btn-delete:hover { background-color: #fce8e6; }
+        .btn-reset { background-color: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; margin-left: 4px; }
+        .btn-reset:hover { background-color: #ffe0b2; }
+    </style>
+</head>
+<body>
+
+    <div id="sidebar-container"></div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">Manage Staff</div>
+            <div class="user-info"><span>Admin (SID: 1)</span><div class="avatar">A</div></div>
+        </div>
+
+        <div class="content-container">
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">SID</th>
+                            <th style="width: 200px;">staff name</th>
+                            <th style="width: 250px;">staff role</th>
+                            <th style="width: 200px;">staff tel</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="row-sid-1">
+                            <td><span style="font-weight: 500; color:#1a73e8;">#1</span></td>
+                            <td><input type="text" id="sname-1" class="inline-input" value="Admin"></td>
+                            <td>
+                                <!-- 使用 Select 限制角色的輸入 -->
+                                <select id="srole-1" class="inline-select">
+                                    <option value="Administrator" selected>Administrator</option>
+                                    <option value="Home Planning Specialist">Home Planning Specialist (B2C)</option>
+                                    <option value="Sales Representative">Sales Representative (B2B)</option>
+                                    <option value="Inventory Clerk">Inventory Clerk </option>
+                                </select>
+                            </td>
+                            <td><input type="tel" id="stel-1" class="inline-input" value="12345678"></td>
+                            <td>
+                                <button class="btn btn-update" onclick="updateStaff(1)">Save</button>
+                                <button class="btn btn-reset" onclick="resetPassword(1)">Reset Password</button>
+                            </td>
+                        </tr>
+                        <tr id="row-sid-2">
+                            <td><span style="font-weight: 500; color:#5f6368;">#2</span></td>
+                            <td><input type="text" id="sname-2" class="inline-input" value="David Wong"></td>
+                            <td>
+                                <select id="srole-2" class="inline-select">
+                                    <option value="Administrator">Administrator</option>
+                                    <option value="Home Planning Specialist">Home Planning Specialist (B2C)</option>
+                                    <option value="Sales Representative" selected>Sales Representative (B2B)</option>
+                                    <option value="Inventory Clerk">Inventory Clerk </option>
+                                </select>
+                            </td>
+                            <td><input type="tel" id="stel-2" class="inline-input" value="98761234"></td>
+                            <td>
+                                <button class="btn btn-update" onclick="updateStaff(2)">Save</button>
+                                <button class="btn btn-reset" onclick="resetPassword(2)">Reset Password</button>
+                                <button class="btn btn-delete" onclick="deleteStaff(2)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="../sidebar.js"></script>
+    <script>
+        loadSidebar('manage-staff');
+
+        function updateStaff(sid) {
+            let name = document.getElementById(`sname-${sid}`).value;
+            let roleElement = document.getElementById(`srole-${sid}`);
+            let roleText = roleElement.options[roleElement.selectedIndex].text;
+
+            if(confirm(`comfrim to change the staff data for SID: ${sid} (${name})?\nNew role will be: ${roleText}`)) {
+                alert(`Update successful!\nStaffs table in database has been updated.`);
+            }
+        }
+
+        function resetPassword(sid) {
+            let name = document.getElementById(`sname-${sid}`).value;
+            if(confirm(`comfrim to reset the password for SID: ${sid} (${name})?\nThe new password will be: 123456`)) {
+                alert(`Password reset successful!\nPlease notify the staff to change their password after login.`);
+            }
+        }
+
+        function deleteStaff(sid) {
+            let name = document.getElementById(`sname-${sid}`).value;
+            if(confirm(`⚠️ warning: Are you sure you want to delete the access rights for staff member "${name}"?\nThis action cannot be undone!`)) {
+                document.getElementById(`row-sid-${sid}`).style.display = 'none';
+                alert(`Staff member ${name} has been deleted.`);
+            }
+        }
+    </script>
+</body>
+</html>
