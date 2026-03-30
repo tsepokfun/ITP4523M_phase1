@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Make an Order</title>
-    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="../Style.css">
 </head>
 
 <body>
+    <a href="selectproduct.html" class="button-back">←</a>
     <h1>Make an Order</h1>
-    <div class="card-container">
+    <div class="card-container"> <!-- container of order form -->
         <div class="info-grid">
             <div class="info-item">
                 <label class="info-label">Product Preview</label>
                 <img id="productImage" alt="Selected Product"
                     style="max-width: 500px; border-radius: 8px; margin-top: 10px;">
             </div>
-
             <div class="info-grid">
                 <div class="info-item">
                     <label class="info-label" for="FurnitureID">Furniture ID</label>
@@ -25,7 +25,7 @@
 
                 <div class="info-item">
                     <label class="info-label" for="FurnitureName">Furniture Name</label>
-                    <input type="text" id="FurnitureName" readonly style="background-color: #f8f9fa;  ">
+                    <input type="text" id="FurnitureName" readonly style="background-color: #f8f9fa; ">
                 </div>
 
                 <div class="info-item">
@@ -62,28 +62,32 @@
                 <button type="reset" class="button button-reset">Reset</button>
             </div>
         </div>
-        <script>
+    </div>
 
-            window.onload = function () {
 
-                const urlParams = new URLSearchParams(window.location.search);
-                const pid = urlParams.get('pid');
+    <!-- To order with the selected product -->
+    <script>
 
-                if (pid) {
-                    document.getElementById('FurnitureID').value = "P-" + pid;
-                    document.getElementById('FurnitureName').value = "Product " + pid;
-                    const imgElement = document.getElementById('productImage');
-                    imgElement.src = "image/" + pid + ".png";
-                }
-                const name = urlParams.get('name');
-                if (name) {
-                    document.getElementById('FurnitureName').value = decodeURIComponent(name.replace(/\+/g, ' '));
-                }
+        window.onload = function () {
 
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById('orderDate').value = today;
-            };
-        </script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const pid = urlParams.get('pid');
+
+            if (pid) {
+                document.getElementById('FurnitureID').value = "P-" + pid;
+                document.getElementById('FurnitureName').value = "Product " + pid;
+                const imgElement = document.getElementById('productImage');
+                imgElement.src = "../../image/" + pid + ".png";
+            }
+            const name = urlParams.get('name');
+            if (name) {
+                document.getElementById('FurnitureName').value = decodeURIComponent(name.replace(/\+/g, ' '));
+            }
+
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('orderDate').value = today;
+        };
+    </script>
 
 </body>
 

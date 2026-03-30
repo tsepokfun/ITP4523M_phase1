@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Delete Order</title>
-    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
+    <a href="../homepage.html" class="button-back">←</a>
     <h1>Delete Order</h1>
 
-    <div class="card-container">
+    <div class="card-container"> <!-- container of order table -->
         <table id="deleteOrderTable">
             <thead>
                 <tr>
@@ -22,7 +25,7 @@
                     <th>Order Status</th>
                 </tr>
             </thead>
-            <tbody id="tableBody">
+            <tbody id="tableBody"> <!-- Order Table(Finish while implementing php code) -->
                 <tr>
                     <td>#ORD-1001</td>
                     <td>2026-03-25</td>
@@ -33,11 +36,12 @@
                     <td>2026-04-05</td>
                     <td><span class="status-tag">pending</span></td>
                     <td>
-                        <button class="btn-delete" onclick="handleDelete(this, 'ORD-1001', '2026-04-05', 2, 'F-992')">Delete</button>
+                        <button class="btn-delete"
+                            onclick="handleDelete(this, 'ORD-1001', '2026-04-05', 2, 'F-992')">Delete</button>
                     </td>
                 </tr>
-                
-             
+
+
                 <tr>
                     <td>#ORD-1002</td>
                     <td>2026-03-20</td>
@@ -48,11 +52,13 @@
                     <td>2026-03-30</td>
                     <td><span class="status-tag">processing</span></td>
                     <td>
-                        <button class="btn-delete btn-disabled" onclick="alert('Cannot delete: Must be at least 2 days before delivery.')">Locked</button>
+                        <button class="btn-delete btn-disabled"
+                            onclick="alert('Cannot delete: Must be at least 2 days before delivery.')">Locked</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </body>
+
 </html>
