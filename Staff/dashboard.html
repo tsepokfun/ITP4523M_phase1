@@ -315,15 +315,14 @@
     </div>
     <script src="sidebar.js"></script>
     <script>
-        // 呼叫函式，並傳入 'dashboard'，這樣主頁的按鈕就會變成藍色 (active)
+        // 呼叫函式，並傳入 'dashboard' 以載入對應的側邊欄項目
         loadSidebar('dashboard');
     </script>
     <script>
-        // 模擬「確認對話框」邏輯 – 符合題目要求的 confirm 刪除/更新
         function deleteOrder(orderId) {
             if (confirm(`comfrim to delete the Order #${orderId}?\nThis action cannot be undone.`)) {
                 alert(`Order #${orderId} has been deleted (demonstration only, actual API integration required)`);
-                // 這裡未來可以改成 Ajax 刪除，並重新整理表格
+                    // actual deletion from DOM or send request to backend
             } else {
                 alert("Deletion cancelled");
             }
@@ -337,7 +336,6 @@
             }
         }
 
-        // 未來擴充：編輯家具時也會呼叫 confirm
         function deleteFurniture(fid) {
             if (confirm(`Confirm to delete furniture with ID ${fid}? This will also affect order records.`)) {
                 alert("Furniture has been deleted (mock)");

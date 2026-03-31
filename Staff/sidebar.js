@@ -45,6 +45,5 @@ function loadSidebar(activePageId) {
         </div>
     `;
 
-    // 將這段 HTML 塞進頁面中 id 為 'sidebar-container' 的位置
     document.getElementById('sidebar-container').innerHTML = sidebarHTML;
 }

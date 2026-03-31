@@ -38,7 +38,10 @@
 
     <div class="main-content">
         <div class="top-bar">
-            <div style="font-size: 22px; font-weight: 500;">Generate Reports</div>
+            <div class="page-title">Dashboard</div>
+            <div class="user-info"><span>Admin (SID: 1)</span>
+                <div class="avatar">A</div>
+            </div>
         </div>
 
         <div class="content-container">
@@ -84,7 +87,7 @@
         function generateReport(reportName) {
             let userConfirm = confirm(`system will generate ${reportName} report.\nAre you sure you want to continue? (Generate this report?)`);
             if(userConfirm) {
-                // 原型展示：呼叫瀏覽器原生的列印功能來模擬 "Generate Report" 行為
+                // photoptye：呼叫瀏覽器原生的列印功能來模擬 "Generate Report" 行為
                 alert(`${reportName} is ready, entering preview/print mode.`);
                 window.print(); 
             }
@@ -92,7 +95,6 @@
     </script>
     <script src="sidebar.js"></script>
     <script>
-        // 呼叫函式，並傳入 'dashboard'，這樣主頁的按鈕就會變成藍色 (active)
         loadSidebar('dashboard');
     </script>
 </body>

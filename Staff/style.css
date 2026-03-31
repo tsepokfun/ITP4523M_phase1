@@ -26,8 +26,6 @@ body { background-color: #f5f5f5; display: flex; height: 100vh; overflow: hidden
 .nav-item { display: block; padding: 10px 16px; margin: 2px 8px; border-radius: 24px; color: #202124; text-decoration: none; font-size: 14px; font-weight: 500; transition: 0.2s; }
 .nav-item:hover { background-color: #f0f0f0; }
 .nav-item.active { background-color: #e8f0fe; color: #1a73e8; }
-
-/* 主內容與頂部共用樣式 */
 .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
 .top-bar { background-color: #ffffff; padding: 12px 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e0e0e0; position: sticky; top: 0; z-index: 5;}
 .page-title { font-size: 22px; font-weight: 500; color: #202124; }

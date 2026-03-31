@@ -29,15 +29,20 @@
 
     <!-- 側邊欄容器 -->
     <div id="sidebar-container"></div>
-
+        
     <div class="main-content">
         <div class="top-bar">
-            <div class="page-title">Manage Materials</div>
-            <div class="user-info"><span>Admin</span><div class="avatar">A</div></div>
+            <div class="page-title">Dashboard</div>
+            <div class="user-info"><span>Admin (SID: 1)</span>
+                <div class="avatar">A</div>
+            </div>
         </div>
 
         <div class="content-container">
             <div class="table-card">
+                <div class="table-toolbar">
+                    <input type="text" class="search-box" placeholder="🔍 Search">
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -52,8 +57,17 @@
                         <!-- 模擬 SQL 資料 -->
                         <tr id="row-mid-1">
                             <td>#1</td>
-                            <td>Oak Wood Plank</td>
-                            <td>pcs</td>
+                            <td><input type="text" id="fname-1" class="inline-input" value="Oak Wood Plank"></td>
+                            <td>
+                                <!-- ostatus 在 DB 是 INT (1,2,3)，我們用 select 對應 -->
+                                <select id="status-1001" class="form-select">
+                                    <option value="1" selected>pcs</option>
+                                    <option value="2">meter</option>
+                                    <option value="3">block</option>
+                                    <option value="4">kg</option>
+                                    <option value="5">roll</option>
+                                </select>
+                            </td>
                             <td>
                                 <input type="number" id="qty-1" class="qty-input" value="500" min="0">
                             </td>
@@ -64,8 +78,17 @@
                         </tr>
                         <tr id="row-mid-2">
                             <td>#2</td>
-                            <td>Steel Tube</td>
-                            <td>meter</td>
+                            <td><input type="text" id="fname-2" class="inline-input" value="Steel Tube"></td>
+                            <td>
+                                <!-- ostatus 在 DB 是 INT (1,2,3)，我們用 select 對應 -->
+                                <select id="status-1001" class="form-select">
+                                    <option value="1">pcs</option>
+                                    <option value="2">meter</option>
+                                    <option value="3">block</option>
+                                    <option value="4">kg</option>
+                                    <option value="5" selected>roll</option>
+                                </select>
+                            </td>
                             <td>
                                 <input type="number" id="qty-2" class="qty-input" value="200" min="0">
                             </td>
@@ -76,8 +99,16 @@
                         </tr>
                         <tr id="row-mid-4">
                             <td>#4</td>
-                            <td>High Density Foam <span class="warning-badge">Low Stock</span></td>
-                            <td>block</td>
+                            <td><input type="text" id="fname-4" class="inline-input" value="High Density Foam"> <span class="warning-badge">Low Stock</span></td>
+                            <td>
+                                <select id="status-1001" class="form-select">
+                                    <option value="1" selected>pcs</option>
+                                    <option value="2">meter</option>
+                                    <option value="3"selected>block</option>
+                                    <option value="4">kg</option>
+                                    <option value="5">roll</option>
+                                </select>
+                            </td>
                             <td>
                                 <input type="number" id="qty-4" class="qty-input" value="50" min="0" style="border-color: #d93025; background-color: #fce8e6;">
                             </td>
@@ -104,7 +135,6 @@
             if(confirm(`Are you sure you want to update the stock quantity of "${mname}" to ${newQty}?`)) {
                 alert(`Update successful!\n${mname} has been updated to ${newQty}.`);
                 
-                // 簡單的 UI 互動：如果大於 100，移除低庫存的紅色樣式 (展示用)
                 let inputBlock = document.getElementById(`qty-${mid}`);
                 if(newQty > 100 && mid == 4) {
                     inputBlock.style.borderColor = "#dadce0";

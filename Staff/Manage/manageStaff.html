@@ -29,12 +29,18 @@
 
     <div class="main-content">
         <div class="top-bar">
-            <div class="page-title">Manage Staff</div>
-            <div class="user-info"><span>Admin (SID: 1)</span><div class="avatar">A</div></div>
+            <div class="page-title">Dashboard</div>
+            <div class="user-info"><span>Admin (SID: 1)</span>
+                <div class="avatar">A</div>
+            </div>
         </div>
 
         <div class="content-container">
+            
             <div class="table-card">
+                <div class="table-toolbar">
+                    <input type="text" class="search-box" placeholder="🔍 Search">
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -62,6 +68,7 @@
                             <td>
                                 <button class="btn btn-update" onclick="updateStaff(1)">Save</button>
                                 <button class="btn btn-reset" onclick="resetPassword(1)">Reset Password</button>
+                                <button class="btn btn-delete" onclick="deleteStaff(1)">Delete</button>
                             </td>
                         </tr>
                         <tr id="row-sid-2">

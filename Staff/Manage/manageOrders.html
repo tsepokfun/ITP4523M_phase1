@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Manage Orders - Premium Living</title>
     <link rel="stylesheet" href="../style.css">
-    <!-- 建議將上面 index.html 的 <style> 內容直接複製到這裡，為了簡潔下方我只放新增的樣式 -->
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
         body { background-color: #f5f5f5; display: flex; height: 100vh; overflow: hidden; }
@@ -13,54 +12,97 @@
         .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
         .top-bar { background-color: #ffffff; padding: 12px 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e0e0e0; }
         
-        /* 表格與表單元素 */
         .content-container { padding: 24px 32px; }
-        .table-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid #e0e0e0; font-size: 14px; }
+        .table-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid #e0e0e0; font-size: 14px; vertical-align: middle; }
         th { font-weight: 500; color: #5f6368; font-size: 13px; text-transform: uppercase; }
         
-        .form-select { padding: 8px 12px; border: 1px solid #dadce0; border-radius: 4px; font-size: 14px; outline: none; background: white; }
-        .form-select:focus { border-color: #1a73e8; }
+        /* 统一输入框样式 */
+        .form-select, .form-input {
+            padding: 8px 12px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+            width: 100%;
+            transition: 0.2s;
+        }
+        .form-select:focus, .form-input:focus {
+            border-color: #1a73e8;
+        }
         
-        .btn { padding: 6px 16px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: 0.2s; }
-        .btn-update { background-color: #e8f0fe; color: #1a73e8; border-color: #d2e3fc; }
-        .btn-update:hover { background-color: #d2e3fc; }
-        .btn-delete { background-color: transparent; color: #d93025; border-color: #d93025; margin-left: 8px; }
-        .btn-delete:hover { background-color: #fce8e6; }
+        .btn {
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+        .btn-update {
+            background-color: #e8f0fe;
+            color: #1a73e8;
+            border-color: #d2e3fc;
+        }
+        .btn-update:hover {
+            background-color: #d2e3fc;
+        }
+        .btn-delete {
+            background-color: transparent;
+            color: #d93025;
+            border-color: #d93025;
+            margin-left: 8px;
+        }
+        .btn-delete:hover {
+            background-color: #fce8e6;
+        }
     </style>
 </head>
 <body>
-    <!-- 左側欄 (同上，為節省空間這裡省略部分 a 標籤，請確保包含 🔄 訂單狀態管理 並設為 active) -->
     <div id="sidebar-container"></div>
 
     <div class="main-content">
         <div class="top-bar">
-            <div style="font-size: 22px; font-weight: 500;">Manage Orders</div>
-            <div class="user-info"><span>Admin (SID: 1)</span><div class="avatar">A</div></div>
+            <div class="page-title">Dashboard</div>
+            <div class="user-info"><span>Admin (SID: 1)</span>
+                <div class="avatar">A</div>
+            </div>
         </div>
 
         <div class="content-container">
+            
             <div class="table-card">
+                <div class="table-toolbar">
+                    <input type="text" class="search-box" placeholder="🔍 Search">
+                </div>
                 <table>
                     <thead>
                         <tr>
                             <th>Order ID (oid)</th>
-                            <th>Customer (cid)</th>
+                            <th>Customer CID</th>
                             <th>Delivery Date</th>
-                            <th>Total Amount</th>
+                            <th>Total Amount ($)</th>
                             <th>Status (ostatus)</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr id="order-1001">
+                        <!-- 订单 1001：所有字段均可编辑 -->
+                        <tr id="order-1001" data-oid="1001">
                             <td>#1001</td>
-                            <td>CID: 2 </td>
-                            <td>2025-10-20</td>
-                            <td>$12,800.00</td>
                             <td>
-                                <!-- ostatus 在 DB 是 INT (1,2,3)，我們用 select 對應 -->
+                                <input type="number" id="cid-1001" class="form-input" value="2" step="1" min="1">
+                            </td>
+                            <td>
+                                <input type="date" id="deliveryDate-1001" class="form-input" value="2025-10-20">
+                            </td>
+                            <td>
+                                <input type="number" id="amount-1001" class="form-input" value="12800.00" step="0.01" min="0">
+                            </td>
+                            <td>
                                 <select id="status-1001" class="form-select">
                                     <option value="1" selected>Processing</option>
                                     <option value="2">Preparing</option>
@@ -73,14 +115,21 @@
                                 <button class="btn btn-delete" onclick="deleteOrder(1001)">Delete</button>
                             </td>
                         </tr>
-                        <tr id="order-1002">
+                        <!-- 订单 1002 -->
+                        <tr id="order-1002" data-oid="1002">
                             <td>#1002</td>
-                            <td>CID: 5 </td>
-                            <td>2025-10-22</td>
-                            <td>$3,200.00</td>
+                            <td>
+                                <input type="number" id="cid-1002" class="form-input" value="5" step="1" min="1">
+                            </td>
+                            <td>
+                                <input type="date" id="deliveryDate-1002" class="form-input" value="2025-10-22">
+                            </td>
+                            <td>
+                                <input type="number" id="amount-1002" class="form-input" value="3200.00" step="0.01" min="0">
+                            </td>
                             <td>
                                 <select id="status-1002" class="form-select">
-                                    <option value="1">Processing </option>
+                                    <option value="1">Processing</option>
                                     <option value="2">Preparing</option>
                                     <option value="3" selected>Shipped</option>
                                     <option value="4">Delivered</option>
@@ -99,25 +148,65 @@
 
     <script src="../sidebar.js"></script>
     <script>
-        // 呼叫函式，並傳入 'dashboard'，這樣主頁的按鈕就會變成藍色 (active)
-        loadSidebar('dashboard');
-    </script>
-    <script>
+        if (typeof loadSidebar === 'function') {
+            loadSidebar('dashboard');
+        }
+
+        // 更新订单：收集所有编辑字段的新值，并显示确认
         function updateOrder(oid) {
-            // 抓取下拉選單目前選中的值與文字
-            let selectElement = document.getElementById(`status-${oid}`);
-            let statusText = selectElement.options[selectElement.selectedIndex].text;
+            // 获取所有输入字段的值
+            const cidInput = document.getElementById(`cid-${oid}`);
+            const deliveryDateInput = document.getElementById(`deliveryDate-${oid}`);
+            const amountInput = document.getElementById(`amount-${oid}`);
+            const statusSelect = document.getElementById(`status-${oid}`);
             
-            if(confirm(`Are you sure you want to update the status of order #${oid} to "${statusText}"?`)) {
-                alert(`Update successful!\nOrder #${oid} status has been changed to ${statusText}.`);
-                // 這裡在真實系統會送出 AJAX 更新資料庫的 ostatus
+            const newCid = cidInput ? cidInput.value : null;
+            const newDeliveryDate = deliveryDateInput ? deliveryDateInput.value : null;
+            const newAmount = amountInput ? parseFloat(amountInput.value).toFixed(2) : null;
+            const newStatusText = statusSelect ? statusSelect.options[statusSelect.selectedIndex].text : null;
+            const newStatusValue = statusSelect ? statusSelect.value : null;
+
+            // 简单验证
+            if (!newCid || newCid <= 0) {
+                alert('Customer CID must be a positive number.');
+                return;
+            }
+            if (!newDeliveryDate) {
+                alert('Please select a valid delivery date.');
+                return;
+            }
+            if (isNaN(newAmount) || newAmount < 0) {
+                alert('Total amount must be a non-negative number.');
+                return;
+            }
+
+            // 构建确认信息
+            let confirmMsg = `Update order #${oid}:\n\n`;
+            confirmMsg += `Customer CID: ${newCid}\n`;
+            confirmMsg += `Delivery Date: ${newDeliveryDate}\n`;
+            confirmMsg += `Total Amount: $${newAmount}\n`;
+            confirmMsg += `Status: ${newStatusText}\n\n`;
+            confirmMsg += `Proceed with update?`;
+
+            if (confirm(confirmMsg)) {
+                alert(`✅ Order #${oid} updated successfully!\n\n` +
+                      `New values:\n` +
+                      `• CID: ${newCid}\n` +
+                      `• Delivery: ${newDeliveryDate}\n` +
+                      `• Amount: $${newAmount}\n` +
+                      `• Status: ${newStatusText}`);
+                
             }
         }
 
+        // 删除订单（模拟）
         function deleteOrder(oid) {
-            if(confirm(`⚠️ warning: Are you sure you want to permanently delete order #${oid}?\nThe associated OrderFurnitures will also be deleted.`)) {
-                document.getElementById(`order-${oid}`).style.display = 'none';
-                alert(`Order #${oid} has been deleted.`);
+            if (confirm(`⚠️ Warning: Are you sure you want to permanently delete order #${oid}?\nAll associated items will also be deleted.`)) {
+                const row = document.getElementById(`order-${oid}`);
+                if (row) {
+                    row.style.display = 'none';
+                    alert(`Order #${oid} has been deleted.`);
+                }
             }
         }
     </script>
