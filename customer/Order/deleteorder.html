@@ -9,56 +9,62 @@
 
 <body>
     <a href="../homepage.html" class="button-back">←</a>
-    <h1>Delete Order</h1>
+    <h1>Delete Order</Dh1>
 
     <div class="card-container"> <!-- container of order table -->
-        <table id="deleteOrderTable">
-            <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Order Date</th>
-                    <th>Furniture ID</th>
-                    <th>Order Quantity</th>
-                    <th>Total Order Amount</th>
-                    <th>Customer ID</th>
-                    <th>Order Delivery Date</th>
-                    <th>Order Status</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"> <!-- Order Table(Finish while implementing php code) -->
-                <tr>
-                    <td>#ORD-1001</td>
-                    <td>2026-03-25</td>
-                    <td>P-1</td>
-                    <td>2</td>
-                    <td>$4,500</td>
-                    <td>C-882</td>
-                    <td>2026-04-05</td>
-                    <td><span class="status-tag">pending</span></td>
-                    <td>
-                        <button class="btn-delete"
-                            onclick="handleDelete(this, 'ORD-1001', '2026-04-05', 2, 'F-992')">Delete</button>
-                    </td>
-                </tr>
+        <div class="filter-section">
+            <div class="search-container">
+                <span class="info-label">Search Table:</span>
+                <input type="text" id="tableSearch" placeholder="Type to search orders...">
+            </div>
 
 
-                <tr>
-                    <td>#ORD-1002</td>
-                    <td>2026-03-20</td>
-                    <td>P-2</td>
-                    <td>1</td>
-                    <td>$1,200</td>
-                    <td>C-451</td>
-                    <td>2026-03-30</td>
-                    <td><span class="status-tag">processing</span></td>
-                    <td>
-                        <button class="btn-delete btn-disabled"
-                            onclick="alert('Cannot delete: Must be at least 2 days before delivery.')">Locked</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            <table id="deleteOrderTable">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Order Date</th>
+                        <th>Furniture ID</th>
+                        <th>Order Quantity</th>
+                        <th>Total Order Amount</th>
+                        <th>Customer ID</th>
+                        <th>Order Delivery Date</th>
+                        <th>Order Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"> <!-- Order Table(Finish while implementing php code) -->
+                    <tr>
+                        <td>#ORD-1001</td>
+                        <td>2026-03-25</td>
+                        <td>P-1</td>
+                        <td>2</td>
+                        <td>$4,500</td>
+                        <td>C-882</td>
+                        <td>2026-04-05</td>
+                        <td><span class="status-tag">pending</span></td>
+                        <td>
+                            <button class="btn-delete"
+                                onclick="handleDelete(this, 'ORD-1001', '2026-04-05', 2, 'F-992')">Delete</button>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>#ORD-1002</td>
+                        <td>2026-03-20</td>
+                        <td>P-2</td>
+                        <td>1</td>
+                        <td>$1,200</td>
+                        <td>C-451</td>
+                        <td>2026-03-30</td>
+                        <td><span class="status-tag">processing</span></td>
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script src="../javascript.js"></script>
 </body>
 
 </html>

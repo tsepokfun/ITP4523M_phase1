@@ -25,7 +25,7 @@ h1 {
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     width: 100%;
-    max-width: 1500px;
+    max-width: 1700px;
 }
 
 .info-grid {
@@ -224,4 +224,36 @@ td {
     box-shadow: 0 12px 24px rgba(26, 115, 232, 0.15);
     border-color: #1a73e8;
     color: #1a73e8;
+}
+
+.search-container {
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+#productSearch {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+    
+}
+#productSearch:focus {
+    border-color: #1a73e8;
+    box-shadow: 0 0 5px rgba(26, 115, 232, 0.5);
+}
+#tableSearch {
+    width: 80%;
+    max-width: 200px;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+#tableSearch:focus {
+    border-color: #1a73e8;
+    box-shadow: 0 0 5px rgba(26, 115, 232, 0.5);
 }
