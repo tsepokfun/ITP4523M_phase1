@@ -3,19 +3,159 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
-    <title>Order</title>
+    <title>View Orders | Premium Living</title>
+    <style>
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            color: #202124;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #5f6368;
+            font-size: 1rem;
+        }
+
+        .filter-section {
+            background: white;
+            border-radius: 24px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f0f2f5;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group select, #tableSearch {
+            padding: 10px 16px;
+            border-radius: 40px;
+            border: 1px solid #dadce0;
+            background: white;
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .filter-group select:focus, #tableSearch:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+
+        .search-container .info-label {
+            font-weight: 500;
+            color: #5f6368;
+        }
+
+        .order-table-wrapper {
+            overflow-x: auto;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0f2f5;
+        }
+
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .order-table th {
+            background: #f8f9fc;
+            padding: 16px 20px;
+            font-weight: 600;
+            color: #202124;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .order-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid #f1f3f4;
+            color: #3c4043;
+        }
+
+        .order-table tr:hover {
+            background-color: #fafbfe;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        .status-pill.status-delivered {
+            background: #e6f4ea;
+            color: #1e7e34;
+        }
+
+        .status-pill.status-pending {
+            background: #fef7e0;
+            color: #b45f06;
+        }
+
+        .status-pill.status-processing {
+            background: #e8f0fe;
+            color: #1a73e8;
+        }
+
+        @media (max-width: 768px) {
+            .filter-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-container {
+                margin-left: 0;
+                justify-content: space-between;
+            }
+            .order-table th, .order-table td {
+                padding: 10px 12px;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <a href="../homepage.html" class="button-back">←</a>
-    <h1>Order Details</h1>
-    <div class="card-container"> <!-- container of order details -->
+    <div class="card-container">
+        <div class="page-header">
+            <h1>Order Details</h1>
+            <p>Manage and track all your orders at a glance</p>
+        </div>
+
         <div class="filter-section">
-            <span class="info-label" style="margin:0">Sort Criteria:</span>
             <div class="filter-group">
+                <span class="info-label" style="margin:0">Sort by:</span>
                 <select id="sortFirst">
-                    <option value="orderId">Order Id</option>
+                    <option value="orderId">Order ID</option>
                     <option value="orderDate" selected>Order Date</option>
                     <option value="totalAmount">Total Amount</option>
                     <option value="status">Status</option>
@@ -24,46 +164,65 @@
                     <option value="asc">Ascending</option>
                     <option value="desc" selected>Descending</option>
                 </select>
+                <button id="applySort" class="button button-primary" type="button">Apply</button>
             </div>
-            <button id="applySort" class="button button-primary" type="button">Apply</button>
+            <div class="search-container">
+                <span class="info-label">🔍 Search:</span>
+                <input type="text" id="tableSearch" placeholder="Order ID, customer, status...">
+            </div>
         </div>
-        <table class="order-table"> <!-- Order Table(Finish while implementing php code) -->
-            <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Order Date</th>
-                    <th>Furniture ID</th>
-                    <th>Order Quantity</th>
-                    <th>Total Order Amount</th>
-                    <th>Customer ID</th>
-                    <th>Order Delivery Date</th>
-                    <th>Order Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>#ORD-1001</td>
-                    <td>2026-03-25</td>
-                    <td>P-1</td>
-                    <td>2</td>
-                    <td>$12,000</td>
-                    <td>C-882</td>
-                    <td>2026-04-05</td>
-                    <td><span class="status-pill status-delivered">processing</span></td>
-                </tr>
-                <tr>
-                    <td>#ORD-1002</td>
-                    <td>2023-10-26</td>
-                    <td>P-2</td>
-                    <td>1</td>
-                    <td>$4,500</td>
-                    <td>C-882</td>
-                    <td>2026-07-05</td>
-                    <td><span class="status-pill status-pending">pending</span></td>
-                </tr>
-            </tbody>
-        </table>
-        <script src="../javascript.js"></script>
+
+        <div class="order-table-wrapper">
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Order Date</th>
+                        <th>Furniture ID</th>
+                        <th>Order Quantity</th>
+                        <th>Total Order Amount</th>
+                        <th>Customer ID</th>
+                        <th>Order Delivery Date</th>
+                        <th>Order Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td>#ORD-1001</td>
+                        <td>2026-03-25</td>
+                        <td>P-1</td>
+                        <td>2</td>
+                        <td>$12,000</td>
+                        <td>C-882</td>
+                        <td>2026-04-05</td>
+                        <td><span class="status-pill status-processing">processing</span></td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-1002</td>
+                        <td>2023-10-26</td>
+                        <td>P-2</td>
+                        <td>1</td>
+                        <td>$4,500</td>
+                        <td>C-882</td>
+                        <td>2026-07-05</td>
+                        <td><span class="status-pill status-pending">pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-1003</td>
+                        <td>2026-03-28</td>
+                        <td>P-3</td>
+                        <td>3</td>
+                        <td>$2,850</td>
+                        <td>C-882</td>
+                        <td>2026-04-12</td>
+                        <td><span class="status-pill status-pending">pending</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="../javascript.js"></script>
 </body>
 
 </html>

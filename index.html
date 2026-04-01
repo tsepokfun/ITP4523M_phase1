@@ -1,111 +1,287 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Premium Living</title>
     <style>
-        /* 基礎簡潔樣式 */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
-        body { 
-            background-color: #f5f5f5; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
+        /* Reset & base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
         }
 
-        /* 登入卡片 */
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 16px;
+        }
+
+        /* Login card */
         .login-card {
             background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            padding: 40px 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
+            transition: all 0.2s ease;
         }
 
-        h2 { color: #202124; margin-bottom: 8px; font-weight: 500; }
-        p { color: #5f6368; font-size: 14px; margin-bottom: 24px; }
+        h2 {
+            color: #202124;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 28px;
+            letter-spacing: -0.2px;
+        }
 
-        /* 輸入框 */
-        .form-group { margin-bottom: 20px; text-align: left; }
-        label { display: block; font-size: 14px; color: #5f6368; margin-bottom: 8px; }
+        .subhead {
+            color: #5f6368;
+            font-size: 14px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #e8eaed;
+            display: inline-block;
+            padding-bottom: 6px;
+        }
+
+        .info-note {
+            background-color: #f8f9fa;
+            border-left: 3px solid #1a73e8;
+            padding: 12px;
+            font-size: 13px;
+            color: #3c4043;
+            border-radius: 6px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .info-note small {
+            display: block;
+            line-height: 1.4;
+        }
+
+        /* Form fields */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #5f6368;
+            margin-bottom: 6px;
+        }
+
         input {
             width: 100%;
-            padding: 12px;
+            padding: 12px 14px;
             border: 1px solid #dadce0;
-            border-radius: 4px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 15px;
             outline: none;
+            transition: all 0.2s;
+            background-color: #fff;
         }
-        input:focus { border: 2px solid #1a73e8; padding: 11px; }
 
-        /* 按鈕 */
+        input:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+        }
+
+        /* Buttons */
         .btn-login {
             background-color: #1a73e8;
             color: white;
             border: none;
             padding: 12px;
             width: 100%;
-            border-radius: 4px;
+            border-radius: 8px;
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.05s;
+            margin-bottom: 12px;
         }
-        .btn-login:hover { background-color: #1557b0; }
 
-        .error-msg { color: #d93025; font-size: 12px; margin-top: 8px; display: none; }
+        .btn-login:hover {
+            background-color: #1557b0;
+        }
+
+        .btn-login:active {
+            transform: scale(0.98);
+        }
+
+        .btn-customer {
+            background-color: #34a853;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-customer:hover {
+            background-color: #2c8e46;
+        }
+
+        /* Error message */
+        .error-msg {
+            color: #d93025;
+            background-color: #fce8e6;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 13px;
+            margin-top: 12px;
+            text-align: center;
+            display: none;
+            border-left: 3px solid #d93025;
+        }
+
+        hr {
+            margin: 20px 0 12px;
+            border: none;
+            border-top: 1px solid #e8eaed;
+        }
+
+        .customer-hint {
+            font-size: 12px;
+            color: #5f6368;
+            margin-top: 8px;
+            margin-bottom: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 28px 20px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="login-card">
-        <h2>Premium Living</h2>
-        <p>Sign in to your account</p>
-        <p><small>photoptye note：<br>Use 'admin' as username to access the staff panel <br> Use 'customer' as username to access the customer page <br> the password is Negligible while not empty </small></p>
-        <p><small></small></p>
-        <p><small></small></p>
+<div class="login-card">
+    <h2>Premium Living</h2>
+    <div class="subhead">Secure access portal</div>
 
-        <form id="loginForm">
-            <div class="form-group">
-                <label>User Name</label>
-                <input type="text" id="username" placeholder="Enter user name" required>
-                <div id="error" class="error-msg">Invalid user name. Please try again.</div>
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="password" placeholder="Enter password" required>
-                <div id="error" class="error-msg">Invalid credentials. Please try again.</div>
-            </div>
-
-            <button type="submit" class="btn-login">Next</button>
-        </form>
+    <!-- Admin info note (remains in English) -->
+    <div class="info-note">
+        <small>🔐 <strong>Admin access:</strong> Use username <strong>'admin'</strong> with any non‑empty password.<br>
+        🏠 <strong>Customer panel:</strong> Use the green button below — no credentials needed.</small>
     </div>
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // 阻止表單重整
-            
-            const user = document.getElementById('username').value.trim().toLowerCase();
-            const errorDiv = document.getElementById('error');
+    <form id="loginForm">
+        <!-- Username field -->
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Enter your username" autocomplete="off">
+        </div>
 
-            if (user === 'admin') {
-                // 跳轉至管理員後台
-                window.location.href = 'Staff/dashboard.html';
-            } 
-            else if (user === 'customer') {
-                // 跳轉至客戶頁面
-                window.location.href = 'Customer/homepage.html';
-            } 
-            else {
-                // 顯示錯誤訊息
-                errorDiv.style.display = 'block';
+        <!-- Password field -->
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter password" autocomplete="off">
+        </div>
+
+        <!-- Dynamic error message (single element to avoid duplication) -->
+        <div id="globalError" class="error-msg"></div>
+
+        <!-- Admin login button (original "log In") -->
+        <button type="button" id="adminLoginBtn" class="btn-login">Log in to Admin Panel</button>
+
+        <div class="customer-hint">👇 No login required — direct customer access 👇</div>
+        <!-- Customer panel button (direct access) -->
+        <button type="button" id="customerPanelBtn" class="btn-login btn-customer">Get in to the Customer Panel</button>
+    </form>
+</div>
+
+<script>
+    (function() {
+        // DOM elements
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const globalErrorDiv = document.getElementById('globalError');
+        const adminBtn = document.getElementById('adminLoginBtn');
+        const customerBtn = document.getElementById('customerPanelBtn');
+
+        // Helper: show error message inside the dedicated error div
+        function showError(message) {
+            globalErrorDiv.textContent = message;
+            globalErrorDiv.style.display = 'block';
+            // Auto-hide after 3.5 seconds (optional but user-friendly)
+            setTimeout(() => {
+                if (globalErrorDiv.style.display === 'block') {
+                    globalErrorDiv.style.display = 'none';
+                }
+            }, 3500);
+        }
+
+        // Clear error when user starts typing or interacting (optional)
+        function clearErrorOnInput() {
+            if (globalErrorDiv.style.display === 'block') {
+                globalErrorDiv.style.display = 'none';
+                globalErrorDiv.textContent = '';
+            }
+        }
+        usernameInput.addEventListener('input', clearErrorOnInput);
+        passwordInput.addEventListener('input', clearErrorOnInput);
+
+        // ----- ADMIN LOGIN LOGIC -----
+        // Expected behavior: username MUST be 'admin' (case-insensitive)
+        // Password cannot be empty (any non-empty string allowed, as per note)
+        adminBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Get values and trim whitespace
+            let username = usernameInput.value.trim();
+            let password = passwordInput.value;     // preserve original, but check non-empty
+
+            // Validation: username is exactly 'admin' (case-insensitive)
+            if (username.toLowerCase() !== 'admin') {
+                showError('Invalid admin username. Only "admin" can access the staff panel.');
+                return;
+            }
+
+            // Password cannot be empty (as per original note: "password is Negligible while not empty")
+            if (!password || password.trim() === '') {
+                showError('Password cannot be empty. Please enter your password to continue.');
+                return;
+            }
+
+            // All checks passed -> redirect to staff dashboard
+            // Using relative path as originally intended: Staff/dashboard.html
+            window.location.href = 'Staff/dashboard.html';
+        });
+
+        // ----- CUSTOMER PANEL BUTTON -----
+        // Direct access: no credentials check, immediately jump to customer homepage
+        customerBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+            // Redirect directly to the customer panel page
+            // Path based on original project structure: Customer/homepage.html
+            window.location.href = 'Customer/homepage.html';
+        });
+
+        // Optional: if the user presses "Enter" inside form, we prevent accidental form behavior
+        // and trigger admin login as default (most intuitive: Enter = admin attempt)
+        const form = document.getElementById('loginForm');
+        form.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                // Simulate admin login button click (more logical than guessing)
+                adminBtn.click();
             }
         });
-    </script>
 
+        // Additional minor improvement: prevent any accidental double submission / ghost behaviour
+        // but both buttons are type="button", no native submit.
+    })();
+</script>
 </body>
 </html>
