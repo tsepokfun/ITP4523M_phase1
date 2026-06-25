@@ -3,8 +3,17 @@
 body { background-color: #f5f5f5; display: flex; height: 100vh; overflow: hidden; }
 
 /* 側邊欄共用樣式 */
+:root {
+    --sidebar-width: 280px;
+}
+#sidebar-container {
+    flex-shrink: 0;
+    display: flex;
+}
 .sidebar { 
-    width: 280px; 
+    width: var(--sidebar-width);
+    min-width: 180px;
+    max-width: 500px;
     background-color: #ffffff; 
     box-shadow: 2px 0 8px rgba(0,0,0,0.05); 
     display: flex; 
@@ -15,7 +24,31 @@ body { background-color: #f5f5f5; display: flex; height: 100vh; overflow: hidden
     height: 100vh; 
     flex-shrink: 0; 
     overflow-y: auto; /* 內容過多時顯示卷軸 */
-    z-index: 10; 
+    z-index: 10;
+    transition: none;
+}
+
+/* 側邊欄拖曳調整寬度把手 */
+.sidebar-resize-handle {
+    width: 5px;
+    background: transparent;
+    cursor: col-resize;
+    flex-shrink: 0;
+    z-index: 20;
+    position: relative;
+    transition: background 0.15s;
+}
+.sidebar-resize-handle:hover,
+.sidebar-resize-handle.active {
+    background: #1a73e8;
+}
+.sidebar-resize-handle::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -4px;
+    right: -4px;
+    bottom: 0;
 }
 .sidebar::-webkit-scrollbar { width: 6px; }
 .sidebar::-webkit-scrollbar-thumb { background-color: #dadce0; border-radius: 10px; }

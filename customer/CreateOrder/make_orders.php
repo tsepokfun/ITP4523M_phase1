@@ -7,7 +7,7 @@ requireCustomer();
 $customerId   = currentUserId();
 $customerName = currentUserName();
 
-$furnitureId = isset($_GET['furniture_id']) ? (int)$_GET['furniture_id'] : 0;
+$furnitureId = isset($_GET['fid']) ? (int)$_GET['fid'] : 0;
 
 $stmt = mysqli_prepare($conn,
     "SELECT furniture_id, furniture_name, description, image, price, stock_quantity
@@ -103,10 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $furniture) {
 mysqli_close($conn);
 
 function getProductImagePath($fid) {
-    $path = "/image/{$fid}.png";
-    $full = __DIR__ . '/../../image/' . $fid . '.png';
-    if (file_exists($full)) return $path;
-    return $path;
+    return '/image.php?fid=' . ((int)$fid);
 }
 ?>
 <!DOCTYPE html>

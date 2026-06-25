@@ -5,15 +5,12 @@
  */
 session_start();
 
-// Redirect if already logged in
-if (isset($_SESSION['user'])) {
-    if ($_SESSION['user']['role'] === 'staff') {
-        header('Location: Staff/dashboard.php');
-        exit();
-    } elseif ($_SESSION['user']['role'] === 'customer') {
-        header('Location: customer/homepage.php');
-        exit();
-    }
+// If already logged in, show a notice instead of redirecting
+// (allows browser back button to work; protected pages still enforce auth via auth.php)
+$alreadyLoggedIn = isset($_SESSION['user']);
+if ($alreadyLoggedIn) {
+    $currentRole = $_SESSION['user']['role'] === 'staff' ? 'Staff' : 'Customer';
+    $currentName = htmlspecialchars($_SESSION['user']['name']);
 }
 
 require_once __DIR__ . '/conn.php';
@@ -103,6 +100,7 @@ mysqli_close($conn);
         .btn-login:active { transform: scale(0.98); }
         .btn-customer { background-color: #34a853; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .btn-customer:hover { background-color: #2c8e46; }
+        .already-note { background-color: #e6f4ea; border-left: 3px solid #34a853; padding: 16px; font-size: 14px; color: #137333; border-radius: 6px; margin-bottom: 24px; text-align: center; }
         .msg-box { color: #d93025; background-color: #fce8e6; border-radius: 6px; padding: 10px 12px; font-size: 13px; margin-bottom: 16px; text-align: center; border-left: 3px solid #d93025; }
         hr { margin: 20px 0 12px; border: none; border-top: 1px solid #e8eaed; }
         .customer-hint { font-size: 12px; color: #5f6368; margin-top: 8px; margin-bottom: 4px; }
@@ -119,6 +117,15 @@ mysqli_close($conn);
             &#127968; <strong>Customer:</strong> Use customer username &amp; password to access customer panel.
         </small>
     </div>
+
+    <?php if ($alreadyLoggedIn): ?>
+        <div class="already-note">
+            &#x2705; Already signed in as <strong><?php echo $currentName; ?></strong> (<?php echo $currentRole; ?>)
+            <br><br>
+            <a class="btn-login" style="display:inline-block;text-decoration:none;width:auto;padding:10px 24px;" href="<?php echo ($_SESSION['user']['role']==='staff') ? 'Staff/dashboard.php' : 'customer/homepage.php'; ?>">Go to Dashboard</a>
+            <a class="btn-login btn-customer" style="display:inline-block;text-decoration:none;width:auto;padding:10px 24px;margin-left:8px;" href="logout.php">Sign Out</a>
+        </div>
+    <?php endif; ?>
 
     <?php if ($loginError !== ''): ?>
         <div class="msg-box"><?php echo htmlspecialchars($loginError); ?></div>
