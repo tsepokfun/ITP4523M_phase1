@@ -1,0 +1,10 @@
+﻿<?php
+session_start();require_once 'D:\ITP4523M_phase1\conn.php';require_once 'D:\ITP4523M_phase1\auth.php';requireStaff();
+$sn=currentUserName();$si=currentUserId();
+$to=mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM Orders"))[0];
+$tf=mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM Furniture"))[0];
+$lm=mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM Material WHERE physical_quantity<50"))[0];
+$pt=mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM Orders WHERE order_status='Open'"))[0];
+$rr=mysqli_query($conn,"SELECT o.order_id,c.customer_name,o.total_amount,o.order_status FROM Orders o JOIN Customer c ON o.customer_id=c.customer_id ORDER BY o.order_date DESC LIMIT 5");
+$ros=array();while($rw=mysqli_fetch_assoc($rr))$ros[]=$rw;mysqli_free_result($rr);mysqli_close($conn);
+echo "DASHBOARD OK";

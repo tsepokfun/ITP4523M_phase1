@@ -1,0 +1,20 @@
+<?php
+/**
+ * conn.php ???±ç”¨è³‡æ?åº«é€??è¨­å?
+ * 
+ * ?€?‰é?è¦é€?Ž¥è³‡æ?åº«ç? PHP ?é¢?†å??¥æ­¤æª”æ??? * ????ƒæ•¸ä¾ç…§?…ç›®è¦æ ¼è¨­å??? */
+
+$hostname = "127.0.0.1";
+$database = "projectDB";
+$username = "root";
+$password = "";
+
+$conn = mysqli_connect($hostname, $username, $password, $database);
+
+// æª¢æŸ¥????¯å¦?å?
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
+
+// è¨­å?å­—å?ç·¨ç¢¼??UTF-8
+mysqli_set_charset($conn, "utf8");

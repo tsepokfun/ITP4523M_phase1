@@ -1,0 +1,178 @@
+﻿Department of Information and Technology
+(HKIIT)
+Higher Diploma in Software Engineering (IT114105)
+Module Name:Internet & Multimedia Applications Development
+Module Code:ITP4523M
+Submission Deadline:Phase 1: 12th teaching week of Semester 2
+Phase 2: 7th teaching week of Semester 3
+Hand in Methods:To be announced by the lecturer
+This Group Project:40% of total module marks (also it is part of EA components)
+The result of EA will not be counted if you do not meet the minimum 70% attendance requirement (if any) governed by the general academic regulations of your programme/course unless approval of the campus principal has been granted.
+Objectives
+In this project, students are asked to:
+build a web application which provides different functions for Customer and Staff.
+apply software development skills to develop a website which is user-friendly, interactive, robust and easy to maintain.
+apply the knowledge that you learned in this module to solve the tasks. (i.e. HTML, CSS, JavaScript, PHP, SQL commands)
+A simplified procedure to show how the web application will be used
+There are two user roles for the management system:
+A Customer can make the orders and retrieve the order records.
+A Staff can manage furniture products, material items and update the order records.
+Driving Question
+You are the CEO of Premium Living Furniture Co. Ltd. Briefly explain how a centralized management system could help the company to promote sales and increase profit.
+*The following are the minimum requirements. However, as a developer, you need to identify any missing or illogical parts in this list to make the system work properly.
+Design for Customer (Interface Design: 15 marks; Function: 35 marks)
+Done By
+Make the orders
+Managed to make orders for the furniture products supplied by our company.
+View furniture product information
+Allow the user to easily select items available from various furniture products.
+* Display the stock quantity on the interface, display sold out if the stock quantity is equal to zero.
+* Sort the list of items wisely to facilitate smart purchasing
+* Provide enough information for customer to view before making order.
+Place the order 
+Allow user to place the order after selecting the furniture.
+Required information for creating an order as below 
+Customer ID
+Order Date
+Order Quantity
+Total Order Amount
+Delivery Address 
+Delivery Date
+* Decrease the stock quantity in Material table after an order is created
+View the order records
+Managed to view any order records created by the customers. The system should display the following necessary information for each order record.
+Required information for order record page:
+Order ID
+Order Date
+Furniture ID
+Order Quantity
+Total Order Amount
+Customer ID
+Order Delivery Date
+Order Status
+Function requirement:
+* List the items in ascending or descending order by at least TWO columns selectable by the user
+Update Customer profile’s information
+Managed to update the customer profile’s information.
+Only allow the use to update the following information:
+Password
+Contact Number
+Customer Address
+Delete Order record
+Delete an order record from the Orders table and update the related records in Material table. Increase the stock quantity in Material table after an order is deleted
+Function requirement:
+A confirmation message should be displayed to let the user decide whether the selected order should be deleted or not.
+* The order can only be deleted two days before the receipts delivery date.
+Design for Staff (Interface Design: 15 marks; Function: 35 marks)
+Done By
+Insert items’ information
+Managed to insert the item with the following information
+Required Item information:
+Furniture ID
+Furniture Name
+Furniture Description
+Furniture Image
+Price per furniture item 
+Material ID
+Material Quantity
+* Furniture ID should be generate automatically by the system as Primary Key.
+* A furniture product may consist of one or multiple materials. 
+Insert Materials’ information
+Managed to insert the Material with the following information 
+Required Item information:
+Material ID 
+Material Name 
+Physical Quantity 
+Unit 
+*Material ID should be generated automatically by the system as Primary Key. 
+Update order records and related material record
+Managed to update any order. The Staff should be able to: 
+View any orders and materials’ information. 
+Update the selected order to a reasonable status, e.g. from Open to Rejected/Approved. 
+Modify the order quantity of any orders. 
+Required information for managing an order as below:
+Order ID
+Order Date
+Furniture ID
+Furniture Image
+Order Quantity
+Total Order Amount
+Customer Contact Name
+Customer Contact Number
+Delivery Address
+Delivery Date
+Order Status
+Material Name
+Used materials in the order
+Material Physical Quantity
+Material Available Quantity
+Unit of the material
+Generate report
+Managed to view the statistics which can help the Staff to wisely manage materials. 
+Required information for report page:
+Order ID
+Furniture Name
+Furniture Image
+Total number for each order item
+Total sales amount ($) for each order item *
+*total sales amount = price * order quantity
+Delete furniture product
+Delete an item from furniture product list.
+Function requirement:
+A confirmation message should be displayed to let the user decide whether the selected item should be deleted or not.
+*An item can be deleted only when the item has no existing related orders.
+Form your project group
+Each student needs to form a project group, the maximum number of students in each group is 2. Strongly recommend you to form a group to complete this project as you can benefit from sharing skills/codes amongst your members, and you can learn to plan, coordinate, and integrate work done by each member. Study carefully the given ERD and table structures before you start the implementation.
+Additional requirements of your project
+Your web site should only use PHP as the server-side programming language (i.e. not ASP, ASP.NET, JSP, servlet etc.), however, you may use JavaScript and CSS for specific purposes. The database server used must be mySQL (version 5.0 or above).
+In your PHP code, you must ensure to use the following parameter values for the following mySQL database functions :     $conn = mysqli_connect($hostname, $username, $password, $database);set  to the values below in a PHP script which is shared by the web pages :     $hostname = "127.0.0.1";     $database = "projectDB";     $username = "root";     $password = "";
+Items to submit (Phase 1) (30% of total project marks)
+Submit all UI design using CSS and HTML. Submission deadline will be announced by the 
+lecturer.
+Items to submit (Phase 2) (70% of total project marks)
+A CD-ROM or DVD-ROM which stores a softcopy of all files for the whole web site. All files must be stored in non-compressed format (no .zip or .rar files please!)
+provide a SQL script file CreateProjectDB.sql to let the lecturer to re-create the database and test data
+for the SQL script file CreateProjectDB.sql, it must contain CREATE TABLE commands to setup the database tables in projectDB database. Include necessary INSERT statements to add additional sample records you want to provide. The following is a sample SQL script :
+drop database IF EXISTS projectDB;
+create database projectDB character set utf8;
+use projectDB;
+You must specify the InnoDB engine for a database table :ENGINE = InnoDBFull explanation of different mySQL database engines :http://dev.mysql.com/doc/refman/5.0/en/storage-engines.htmlYou must specify the InnoDB engine for a database table :ENGINE = InnoDBFull explanation of different mySQL database engines :http://dev.mysql.com/doc/refman/5.0/en/storage-engines.html
+You must specify the InnoDB engine for a database table :
+ENGINE = InnoDB
+Full explanation of different mySQL database engines :
+http://dev.mysql.com/doc/refman/5.0/en/storage-engines.html
+You must specify the InnoDB engine for a database table :
+ENGINE = InnoDB
+Full explanation of different mySQL database engines :
+http://dev.mysql.com/doc/refman/5.0/en/storage-engines.html
+drop table IF EXISTS Users;
+Create table Users (
+  userName Varchar(30) NOT NULL,
+  userPswd Varchar(10),
+ Primary Key (userName)) ENGINE = InnoDB;
+INSERT INTO Users (userName, userPswd) VALUES 
+('admin1', 'secret1'),
+('admin2', 'secret2');
+a demonstration of your completed web site should be recorded by a 30-day free-trial software Camtasia Studio 8(http://discover.techsmith.com/try-camtasia/clkn/https/www.techsmith.com/download/camtasia/). You should save different parts of your demonstration into different .mp4 files. In a Word document named video_list.docx, briefly describe the main content of each demo video file you have created. The video files will facilitate the lecturer to have in-depth evaluation of your web application. Here are some online tutorials for Camtasia Studio 8 http://www.techsmith.com/tutorial-camtasia-current.html :Getting Started: 1 - Record Full Screen : http://www.techsmith.com/tutorial-camtasia-record-full-screen.html  Produce and Share an MP4 Video : http://www.techsmith.com/tutorial-camtasia-produce-and-share-mp4-video.html
+Assessment criteria of your project
+The functions implemented can perform correctly in general and special situations
+Enough detail of database records and extensive data validation
+Techniques used to promote code reusability (e.g. share common PHP/JavaScript/CSS files amongst different web pages) and standardize the user-interface of the web pages
+Coding style (e.g. indentation, meaningful variable names, modularity by user-defined functions etc.) and meaningful comment is added to program codes
+Creativity to enhance implemented functions so that they become easy to use, more interactive to the users or can handle some problems in real life situation
+Screen design and overall quality of the integration of different functions in the web site
+ A guideline for web development
+It is a step-by-step approach I suggested for inexperienced web developers to develop the web site easily:
+decide what information to be displayed and design a number of web pages in HTML code (not PHP code at this stage) to display the information
+think about the site structure by creating different sub-folders to store files of different purposes (e.g. images folder to store image files, style folder to store CSS files, Connections folder to store files which define the settings for database connection) and design the linkages between the pages. You can easily view the site structure using DW8's site map view
+create HTML web pages (do not add JavaScript so soon) and design the layout with HTML codes and CSS rules. It is a good practice to check your .html files can pass the XHTML validation after completing a .html file
+when using CSS, it is preferred to create external CSS files (stylesheets) which can be reused in other web pages, so that other pages can have consistent formatting
+use DW CS6's template features which can help you to create a new page with a standard layout and also it provides common editable regions for web pages created from the same template.
+define frameset(s) and navigation bar or menu to link up different pages
+add JavaScript code to produce more interactive behaviors (such as validate data in the form, highlight a table row with different background color when the mouse moves over a table row). It is preferred to use external JavaScript file which will be reused in other web pages
+replace hyperlink text with image / button to beautify the links. Dreamweaver can help you to create nice Flash buttons easily
+finally, it comes to the hardest work, that is to convert some of the HTML codes into PHP codes in order to generate dynamic contents from data extracted from database, cookie and PHP pre-defined arrays ($_POST, $_GET, $_COOKIE, $_SESSION, $_FILES, $_SERVER etc.)
+Penalty for plagiarism
+Each student needs to submit his/her own work. Plagiarism (抄襲) will be treated seriously.  
+All group projects that have been found involved wholly or partly in plagiarism (no matter these projects are from the original authors or from the plagiarists) will score ZERO marks. Furthermore, disciplinary action will be followed.
+Late submission will receive ZERO marks
