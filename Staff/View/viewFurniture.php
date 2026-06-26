@@ -7,6 +7,6 @@ $rows=[];while($rw=mysqli_fetch_assoc($r))$rows[]=$rw;mysqli_free_result($r);mys
 <body><div id="sidebar-container"></div><div class="main-content"><div class="top-bar"><div class="page-title">View Furniture</div></div>
 <div class="content-container"><div class="tbl-wrap"><table><thead><tr><th>Image</th><th>ID</th><th>Name</th><th>Price</th><th>Stock</th><th>Description</th></tr></thead><tbody>
 <?php foreach($rows as $rw):$low=(int)$rw['stock_quantity']<5;?>
-<tr><td><img src="/image.php?fid=<?php echo $rw['furniture_id'];?>" class="thumb" alt=""></td><td><?php echo $rw['furniture_id'];?></td><td><strong><?php echo htmlspecialchars($rw['furniture_name']);?></strong></td><td>$<?php echo number_format($rw['price'],2);?></td><td class="<?php echo $low?'low':'';?>"><?php echo $rw['stock_quantity'];?></td><td><?php echo htmlspecialchars(isset($rw['description']) ? $rw['description'] : '');?></td></tr>
+<tr><td><img src="../../image.php?fid=<?php echo $rw['furniture_id'];?>" class="thumb" alt=""></td><td><?php echo $rw['furniture_id'];?></td><td><strong><?php echo htmlspecialchars($rw['furniture_name']);?></strong></td><td>$<?php echo number_format($rw['price'],2);?></td><td class="<?php echo $low?'low':'';?>"><?php echo $rw['stock_quantity'];?></td><td><?php echo htmlspecialchars(isset($rw['description']) ? $rw['description'] : '');?></td></tr>
 <?php endforeach;?></tbody></table></div></div></div>
 <script src="../sidebar.js"></script><script>loadSidebar('view-furniture');</script></body></html>

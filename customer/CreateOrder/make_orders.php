@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $furniture) {
 mysqli_close($conn);
 
 function getProductImagePath($fid) {
-    return '/image.php?fid=' . ((int)$fid);
+    return '../../image.php?fid=' . ((int)$fid);
 }
 ?>
 <!DOCTYPE html>
@@ -145,13 +145,13 @@ function getProductImagePath($fid) {
 <body>
 <div class="order-container">
     <div class="top-bar">
-        <a class="nav-button" href="/customer/homepage.php">&#8592; Back to Homepage</a>
-        <a class="nav-button btn-select-all" href="/customer/CreateOrder/selectproduct.php">Select all products &#10133;</a>
+        <a class="nav-button" href="../homepage.php">&#8592; Back to Homepage</a>
+                <a class="nav-button btn-select-all" href="selectproduct.php">Select all products &#10133;</a>
     </div>
     <h1>Make an Order</h1>
     <?php if ($message): ?><div class="msg-box <?php echo $messageType; ?>"><?php echo $message; ?></div><?php endif; ?>
     <?php if (!$furniture): ?>
-        <div class="msg-box error">Product not found. Please <a href="/customer/CreateOrder/selectproduct.php">select a product</a>.</div>
+        <div class="msg-box error">Product not found. Please <a href="selectproduct.php">select a product</a>.</div>
     <?php else: ?>
     <div class="info-grid">
         <div class="preview-section">

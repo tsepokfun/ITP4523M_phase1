@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();require_once __DIR__.'/../../conn.php';require_once __DIR__.'/../../auth.php';requireCustomer();
 $cid=currentUserId();$cn=currentUserName();$msg='';$mt='';
 
@@ -30,7 +30,6 @@ if($_SERVER['REQUEST_METHOD']==='POST'&&isset($_POST['order_id'])){
     }
 }
 
-$r=mysqli_query($conn,"SELECT o.order_id,o.order_date,o.furniture_id,f.furniture_name,o.order_quantity,o.total_amount,o.delivery_date,o.order_status FROM Orders o JOIN Furniture f ON o.furniture_id=f.furniture_id WHERE o.customer_id=? ORDER BY o.delivery_date DESC");
 $s=mysqli_prepare($conn,"SELECT o.order_id,o.order_date,o.furniture_id,f.furniture_name,o.order_quantity,o.total_amount,o.delivery_date,o.order_status FROM Orders o JOIN Furniture f ON o.furniture_id=f.furniture_id WHERE o.customer_id=? ORDER BY o.delivery_date DESC");
 mysqli_stmt_bind_param($s,'i',$cid);mysqli_stmt_execute($s);$res=mysqli_stmt_get_result($s);
 $ords=array();while($rw=mysqli_fetch_assoc($res))$ords[]=$rw;mysqli_stmt_close($s);mysqli_close($conn);
@@ -46,3 +45,4 @@ $ords=array();while($rw=mysqli_fetch_assoc($res))$ords[]=$rw;mysqli_stmt_close($
 <?php endforeach;?></tbody></table><?php endif;?></div></div>
 <script>(function(){var si=document.getElementById('tableSearch');if(si){si.addEventListener('input',function(){var t=this.value.toLowerCase();var rs=document.querySelectorAll('#tableBody tr');rs.forEach(function(r){r.style.display=r.innerText.toLowerCase().indexOf(t)!==-1?'':'none';});});}})();</script>
 </body></html>
+

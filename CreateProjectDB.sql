@@ -103,8 +103,11 @@ INSERT INTO Customer (customer_name, password, contact_number, address) VALUES
 ('Jacky Lau', 'jacky123', '68001010', '100 Argyle Street, Kowloon');
 
 INSERT INTO Staff (staff_name, password) VALUES
-('Admin Staff',  'admin123'),
-('Manager',      'manager123');
+('Alice Smith', 'Password123!'),
+('Bob Jones', 'StaffPass2026'),
+('Charlie Brown', 'SecureWord789'),
+('Diana Prince', 'AdminAccess!'),
+('Evan Wright', 'Welcome2Staff');
 
 INSERT INTO Material (material_name, physical_quantity, unit) VALUES
 ('Oak Wood',     200, 'kg'),
@@ -118,7 +121,7 @@ INSERT INTO Furniture (furniture_name, description, image, price, stock_quantity
 ('Steel Bookshelf',   '5-tier steel bookshelf, modern design',    NULL,    450.00, 15),
 ('Fabric Sofa',       '3-seater fabric sofa with foam padding',   NULL,   2500.00,  8),
 ('Oak Bed Frame',     'Queen-size solid oak bed frame',           NULL,   1800.00,  5),
-('Study Chair',       'Ergonomic study chair with fabric cover',  'chair.jpg',        350.00, 20);
+('Study Chair',       'Ergonomic study chair with fabric cover',  NULL,   350.00, 20);
 
 INSERT INTO Furniture_Material (furniture_id, material_id, material_quantity) VALUES
 (1, 1, 30.00),  -- Oak Dining Table uses Oak Wood
