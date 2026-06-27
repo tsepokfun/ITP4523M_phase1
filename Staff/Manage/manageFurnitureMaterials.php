@@ -26,7 +26,7 @@ mysqli_free_result($matResult);
 $currentMats = array();
 if ($furnitureId > 0) {
     $fmResult = mysqli_query($conn,
-        "SELECT fm.material_id, fm.material_quantity, m.material_name, m.unit
+        "SELECT fm.material_id, fm.material_quantity, m.material_name, m.unit, m.physical_quantity
          FROM Furniture_Material fm
          JOIN Material m ON fm.material_id = m.material_id
          WHERE fm.furniture_id = $furnitureId
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $furniture) {
         // Refresh current assignments
         $currentMats = array();
         $fmResult = mysqli_query($conn,
-            "SELECT fm.material_id, fm.material_quantity, m.material_name, m.unit
+            "SELECT fm.material_id, fm.material_quantity, m.material_name, m.unit, m.physical_quantity
              FROM Furniture_Material fm
              JOIN Material m ON fm.material_id = m.material_id
              WHERE fm.furniture_id = $furnitureId
@@ -180,10 +180,7 @@ mysqli_close($conn);
                         </thead>
                         <tbody>
                             <?php foreach ($currentMats as $cm):
-                                // Fetch current stock for this material
-                                $matStock = 0;
-                                $smResult = mysqli_query($conn, "SELECT physical_quantity FROM Material WHERE material_id = " . (int)$cm['material_id']);
-                                if ($smRow = mysqli_fetch_assoc($smResult)) $matStock = (float)$smRow['physical_quantity'];
+                                $matStock = (float)$cm['physical_quantity'];
                                 $maxUnits = $cm['material_quantity'] > 0 ? floor($matStock / $cm['material_quantity']) : 'N/A';
                             ?>
                                 <tr>
