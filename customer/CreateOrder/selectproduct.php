@@ -1,6 +1,6 @@
 <?php
 session_start();require_once __DIR__.'/../../conn.php';require_once __DIR__.'/../../auth.php';requireCustomer();
-$r=mysqli_query($conn,"SELECT furniture_id,furniture_name,image,price,stock_quantity FROM Furniture ORDER BY furniture_name ASC");
+$r=mysqli_query($conn,"SELECT furniture_id,furniture_name,price,stock_quantity FROM Furniture ORDER BY furniture_name ASC");
 $ps=array();while($rw=mysqli_fetch_assoc($r))$ps[]=$rw;mysqli_free_result($r);mysqli_close($conn);
 $cn=currentUserName();
 function imgsrc($p){return '../../image.php?fid='.((int)$p['furniture_id']);}
@@ -10,9 +10,9 @@ function imgsrc($p){return '../../image.php?fid='.((int)$p['furniture_id']);}
 <div class="card-container"><div class="user-bar"><span class="user-name">&#128100; <?php echo htmlspecialchars($cn);?></span><span class="user-links"><a href="../homepage.php">Home</a><a href="../../logout.php">Sign Out</a></span></div>
 <div class="search-container"><input type="text" id="productSearch" placeholder="Search furniture name..."></div><p class="info-label">Click on a product to view details and place an order:</p>
 <div class="product-grid" id="productGrid">
-<?php foreach($ps as $p):$so=((int)$p['stock_quantity']<=0);$low=(!$so&&(int)$p['stock_quantity']<5);?>
+<?php foreach($ps as $p):$so=((int)$p['stock_quantity']<=0);?>
 <a href="make_orders.php?fid=<?php echo $p['furniture_id'];?>" class="image-link<?php echo $so?' sold-out':'';?>" data-product-name="<?php echo htmlspecialchars(strtolower($p['furniture_name']));?>">
 <div class="product-img-wrap"><img src="<?php echo imgsrc($p);?>" alt="<?php echo htmlspecialchars($p['furniture_name']);?>" onerror="this.style.display='none'"><span class="sold-out-badge">Sold Out</span></div>
-<div class="product-info"><span class="FurnitureName"><?php echo htmlspecialchars($p['furniture_name']);?></span><div class="product-price">$<?php echo number_format($p['price'],2);?></div><div class="product-stock<?php echo $low?' low':'';?>"><?php echo $so?'Sold Out':'Stock: '.$p['stock_quantity'];?></div></div></a>
+<div class="product-info"><span class="FurnitureName"><?php echo htmlspecialchars($p['furniture_name']);?></span><div class="product-price">$<?php echo number_format($p['price'],2);?></div><div class="product-stock"><?php echo $so?'Sold Out':'Available';?></div></div></a>
 <?php endforeach;?></div></div>
 <script>(function(){var si=document.getElementById('productSearch');var ls=document.querySelectorAll('#productGrid .image-link');si.addEventListener('input',function(){var t=this.value.trim().toLowerCase();var vc=0;ls.forEach(function(l){var n=l.getAttribute('data-product-name')||'';if(t===''||n.indexOf(t)!==-1){l.style.display='';vc++;}else{l.style.display='none';}});var g=document.getElementById('productGrid');var nm=document.getElementById('noResultMsg');if(vc===0&&t!==''){if(!nm){nm=document.createElement('div');nm.id='noResultMsg';nm.textContent='No furniture found matching \"'+t+'\".';g.appendChild(nm);}else{nm.textContent='No furniture found matching \"'+t+'\".';nm.style.display='';}}else if(nm){nm.style.display='none';}});})();</script></body></html>

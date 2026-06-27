@@ -46,7 +46,6 @@ CREATE TABLE Furniture (
     furniture_id    INT AUTO_INCREMENT,
     furniture_name  VARCHAR(100) NOT NULL,
     description     TEXT,
-    image           LONGBLOB,
     price           DECIMAL(10,2) NOT NULL,
     stock_quantity  INT NOT NULL DEFAULT 0,
     PRIMARY KEY (furniture_id)
@@ -116,12 +115,12 @@ INSERT INTO Material (material_name, physical_quantity, unit) VALUES
 ('Fabric Cover', 100, 'meter'),
 ('Screws',       500, 'pcs');
 
-INSERT INTO Furniture (furniture_name, description, image, price, stock_quantity) VALUES
-('Oak Dining Table',  'Solid oak dining table for 6 persons',     NULL,   1200.00, 10),
-('Steel Bookshelf',   '5-tier steel bookshelf, modern design',    NULL,    450.00, 15),
-('Fabric Sofa',       '3-seater fabric sofa with foam padding',   NULL,   2500.00,  8),
-('Oak Bed Frame',     'Queen-size solid oak bed frame',           NULL,   1800.00,  5),
-('Study Chair',       'Ergonomic study chair with fabric cover',  NULL,   350.00, 20);
+INSERT INTO Furniture (furniture_name, description, price, stock_quantity) VALUES
+('Oak Dining Table',  'Solid oak dining table for 6 persons',     1200.00, 10),
+('Steel Bookshelf',   '5-tier steel bookshelf, modern design',     450.00, 15),
+('Fabric Sofa',       '3-seater fabric sofa with foam padding',   2500.00,  8),
+('Oak Bed Frame',     'Queen-size solid oak bed frame',           1800.00,  5),
+('Study Chair',       'Ergonomic study chair with fabric cover',   350.00, 20);
 
 INSERT INTO Furniture_Material (furniture_id, material_id, material_quantity) VALUES
 (1, 1, 30.00),  -- Oak Dining Table uses Oak Wood

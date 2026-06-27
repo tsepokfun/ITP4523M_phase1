@@ -29,8 +29,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'&&isset($_POST['order_id'])){
         }
     }
 }
-
-$s=mysqli_prepare($conn,"SELECT o.order_id,o.order_date,o.furniture_id,f.furniture_name,o.order_quantity,o.total_amount,o.delivery_date,o.order_status FROM Orders o JOIN Furniture f ON o.furniture_id=f.furniture_id WHERE o.customer_id=? ORDER BY o.delivery_date DESC");
+require_once __DIR__.'/../../sort_utils.php';$allowed=['o.order_id'=>'Order ID','o.order_date'=>'Date','f.furniture_name'=>'Furniture','o.order_quantity'=>'Qty','o.total_amount'=>'Total','o.delivery_date'=>'Delivery','o.order_status'=>'Status'];list($sort,$order)=get_sort_params($allowed,'o.delivery_date');
+$s=mysqli_prepare($conn,"SELECT o.order_id,o.order_date,o.furniture_id,f.furniture_name,o.order_quantity,o.total_amount,o.delivery_date,o.order_status FROM Orders o JOIN Furniture f ON o.furniture_id=f.furniture_id WHERE o.customer_id=? ".sort_clause($sort,$order));
 mysqli_stmt_bind_param($s,'i',$cid);mysqli_stmt_execute($s);$res=mysqli_stmt_get_result($s);
 $ords=array();while($rw=mysqli_fetch_assoc($res))$ords[]=$rw;mysqli_stmt_close($s);mysqli_close($conn);
 ?><!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Delete Order</title><link rel="stylesheet" href="../style.css">
@@ -39,7 +39,7 @@ $ords=array();while($rw=mysqli_fetch_assoc($res))$ords[]=$rw;mysqli_stmt_close($
 <?php if($msg):?><div class="msg <?php echo $mt;?>"><?php echo htmlspecialchars($msg);?></div><?php endif;?>
 <div class="filter-bar"><div><span style="font-weight:500;color:#5f6368">Search:</span> <input type="text" id="tableSearch" placeholder="Order ID, status..."></div><a href="order.php" style="color:#1a73e8;text-decoration:none;padding:8px 18px;border:1px solid #dadce0;border-radius:40px;">View Orders</a></div>
 <div class="tbl-wrap"><?php if(empty($ords)):?><div class="empty">No orders to delete.</div><?php else:?>
-<table><thead><tr><th>Order ID</th><th>Date</th><th>Furniture</th><th>Qty</th><th>Total</th><th>Delivery</th><th>Status</th><th>Action</th></tr></thead><tbody id="tableBody">
+<table><thead><tr><th><?php echo sortable_th('o.order_id','Order ID',$sort,$order);?></th><th><?php echo sortable_th('o.order_date','Date',$sort,$order);?></th><th><?php echo sortable_th('f.furniture_name','Furniture',$sort,$order);?></th><th><?php echo sortable_th('o.order_quantity','Qty',$sort,$order);?></th><th><?php echo sortable_th('o.total_amount','Total',$sort,$order);?></th><th><?php echo sortable_th('o.delivery_date','Delivery',$sort,$order);?></th><th><?php echo sortable_th('o.order_status','Status',$sort,$order);?></th><th>Action</th></tr></thead><tbody id="tableBody">
 <?php foreach($ords as $o):$dd=$o['delivery_date'];$dl=(strtotime($dd)-strtotime(date('Y-m-d')))/86400;$can=($dl>=2);?>
 <tr><td><strong>#<?php echo $o['order_id'];?></strong></td><td><?php echo $o['order_date'];?></td><td><?php echo htmlspecialchars($o['furniture_name']);?> (#<?php echo $o['furniture_id'];?>)</td><td><?php echo $o['order_quantity'];?></td><td>$<?php echo number_format($o['total_amount'],2);?></td><td><?php echo htmlspecialchars($dd);?><span class="days<?php echo $dl<2?' soon':'';?>">(<?php echo $dl>=0?floor($dl).'d':'past';?>)</span></td><td><span class="st"><?php echo htmlspecialchars($o['order_status']);?></span></td><td><?php if($can):?><form method="post" style="display:inline" onsubmit="return confirm('Delete order #<?php echo $o['order_id'];?>? This will restore all stocks.');"><input type="hidden" name="order_id" value="<?php echo $o['order_id'];?>"><button type="submit" class="btn-d">Delete</button></form><?php else:?><button type="button" class="btn-d" disabled title="Only 2+ days before delivery">Locked</button><?php endif;?></td></tr>
 <?php endforeach;?></tbody></table><?php endif;?></div></div>

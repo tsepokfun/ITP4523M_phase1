@@ -10,7 +10,7 @@ $customerName = currentUserName();
 $furnitureId = isset($_GET['fid']) ? (int)$_GET['fid'] : 0;
 
 $stmt = mysqli_prepare($conn,
-    "SELECT furniture_id, furniture_name, description, image, price, stock_quantity
+    "SELECT furniture_id, furniture_name, description, price, stock_quantity
      FROM Furniture WHERE furniture_id = ?"
 );
 mysqli_stmt_bind_param($stmt, 'i', $furnitureId);
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $furniture) {
         $errors[] = 'Order quantity must be at least 1.';
     }
     if ($orderQuantity > $furniture['stock_quantity']) {
-        $errors[] = 'Insufficient stock. Only ' . $furniture['stock_quantity'] . ' item(s) available.';
+        $errors[] = 'Insufficient stock. Please reduce your order quantity.';
     }
     if ($deliveryAddress === '') { $errors[] = 'Delivery address is required.'; }
     if ($deliveryDate === '') { $errors[] = 'Delivery date is required.'; }
@@ -158,10 +158,11 @@ function getProductImagePath($fid) {
             <div class="info-label">Product Preview</div>
             <img src="<?php echo htmlspecialchars(getProductImagePath($furniture['furniture_id'])); ?>" alt="<?php echo htmlspecialchars($furniture['furniture_name']); ?>" class="product-preview-img" onerror="this.style.display='none'">
             <div class="price-tag">$<?php echo number_format($furniture['price'], 2); ?></div>
-            <?php $qty = $furniture['stock_quantity'];
-            if ($qty > 10) echo '<span class="stock-badge in-stock">In Stock: ' . $qty . '</span>';
-            elseif ($qty > 0) echo '<span class="stock-badge low-stock">Low Stock: ' . $qty . '</span>';
-            else echo '<span class="stock-badge sold-out">Sold Out</span>'; ?>
+            <?php if ($furniture['stock_quantity'] > 0): ?>
+                <span class="stock-badge in-stock">Available</span>
+            <?php else: ?>
+                <span class="stock-badge sold-out">Unavailable</span>
+            <?php endif; ?>
         </div>
         <div class="details-section">
             <form method="post" id="orderForm">
@@ -169,7 +170,7 @@ function getProductImagePath($fid) {
                     <div class="info-item"><label class="info-label">Furniture</label><input type="text" readonly value="#<?php echo $furniture['furniture_id']; ?> - <?php echo htmlspecialchars($furniture['furniture_name']); ?>"></div>
                     <div class="info-item"><label class="info-label">Customer</label><input type="text" readonly value="<?php echo htmlspecialchars($customerName); ?> (ID: <?php echo $customerId; ?>)"></div>
                     <div class="info-item"><label class="info-label">Order Date</label><input type="date" value="<?php echo date('Y-m-d'); ?>" readonly></div>
-                    <div class="info-item"><label class="info-label" for="order_quantity">Order Quantity</label><input type="number" id="order_quantity" name="order_quantity" min="1" max="<?php echo $furniture['stock_quantity']; ?>" value="1" required></div>
+                    <div class="info-item"><label class="info-label" for="order_quantity">Order Quantity</label><input type="number" id="order_quantity" name="order_quantity" min="1" value="1" required></div>
                     <div class="info-item"><label class="info-label">Total Amount ($)</label><input type="text" id="total_amount" readonly value="$<?php echo number_format($furniture['price'], 2); ?>"></div>
                     <div class="info-item" style="grid-column:span 2;"><label class="info-label" for="delivery_address">Delivery Address</label><textarea id="delivery_address" name="delivery_address" rows="2" required></textarea></div>
                     <div class="info-item"><label class="info-label" for="delivery_date">Delivery Date</label><input type="date" id="delivery_date" name="delivery_date" value="<?php echo date('Y-m-d', strtotime('+7 days')); ?>" required></div>
