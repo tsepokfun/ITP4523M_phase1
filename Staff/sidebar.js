@@ -40,6 +40,7 @@ function loadSidebar(activePageId) {
         + '  <div class="nav-section">'
         + '    <div class="nav-title">⚙️ Manage</div>'
         + '    <a href="' + prefix + 'Staff/Manage/manageFurniture.php" class="nav-item' + (activePageId === 'manage-furniture' ? ' active' : '') + '">🪑 Furniture Management</a>'
+        + '    <a href="' + prefix + 'Staff/Manage/manageFurnitureMaterials.php" class="nav-item' + (activePageId === 'manage-furniture-materials' ? ' active' : '') + '">🧱 Furniture Materials</a>'
         + '    <a href="' + prefix + 'Staff/Manage/manageMaterials.php" class="nav-item' + (activePageId === 'manage-materials' ? ' active' : '') + '">📦 Materials Management</a>'
         + '    <a href="' + prefix + 'Staff/Manage/manageOrders.php" class="nav-item' + (activePageId === 'manage-orders' ? ' active' : '') + '">🔄 Orders Management</a>'
         + '    <a href="' + prefix + 'Staff/Manage/manageCustomers.php" class="nav-item' + (activePageId === 'manage-customers' ? ' active' : '') + '">👥 Customers Management</a>'

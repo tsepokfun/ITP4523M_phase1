@@ -33,13 +33,13 @@ function sort_clause($col, $ord) {
 }
 
 /**
- * Render a sortable <th> with clickable link and arrow indicator.
+ * Render sortable header contents with clickable link and arrow indicator.
  *
  * @param string $key    Column key (must match key in $allowed map).
  * @param string $label  Display label for the column header.
  * @param string $current_sort  Currently active sort column key.
  * @param string $current_order Currently active sort order (ASC/DESC).
- * @return string HTML <th> element.
+ * @return string HTML content for a <th> element.
  */
 function sortable_th($key, $label, $current_sort, $current_order) {
     $is_active = ($key === $current_sort);
@@ -61,10 +61,10 @@ function sortable_th($key, $label, $current_sort, $current_order) {
     $qs['order'] = $next_order;
     $href = '?' . http_build_query($qs);
 
-    return '<th><a class="sort-link" href="' . htmlspecialchars($href) . '">'
+        return '<a class="sort-link" href="' . htmlspecialchars($href) . '">'
          . htmlspecialchars($label)
          . '<span class="' . $arrow_class . '">' . $arrow . '</span>'
-         . '</a></th>';
+            . '</a>';
 }
 
 /**

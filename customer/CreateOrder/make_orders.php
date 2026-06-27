@@ -10,7 +10,7 @@ $customerName = currentUserName();
 $furnitureId = isset($_GET['fid']) ? (int)$_GET['fid'] : 0;
 
 $stmt = mysqli_prepare($conn,
-    "SELECT furniture_id, furniture_name, description, price, stock_quantity
+    "SELECT furniture_id, furniture_name, description, price
      FROM Furniture WHERE furniture_id = ?"
 );
 mysqli_stmt_bind_param($stmt, 'i', $furnitureId);
@@ -33,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $furniture) {
     if ($orderQuantity < 1) {
         $errors[] = 'Order quantity must be at least 1.';
     }
-    if ($orderQuantity > $furniture['stock_quantity']) {
+    $availStock = getDerivedStock($conn, $furnitureId);
+    if ($orderQuantity > $availStock) {
         $errors[] = 'Insufficient stock. Please reduce your order quantity.';
     }
     if ($deliveryAddress === '') { $errors[] = 'Delivery address is required.'; }
@@ -60,13 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $furniture) {
             mysqli_stmt_close($stmt);
 
             $stmt = mysqli_prepare($conn,
-                "UPDATE Furniture SET stock_quantity = stock_quantity - ? WHERE furniture_id = ?"
-            );
-            mysqli_stmt_bind_param($stmt, 'ii', $orderQuantity, $furnitureId);
-            if (!mysqli_stmt_execute($stmt)) throw new Exception('Failed to update furniture stock.');
-            mysqli_stmt_close($stmt);
-
-            $stmt = mysqli_prepare($conn,
                 "SELECT material_id, material_quantity FROM Furniture_Material WHERE furniture_id = ?"
             );
             mysqli_stmt_bind_param($stmt, 'i', $furnitureId);
@@ -86,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $furniture) {
             mysqli_stmt_close($stmt);
 
             mysqli_commit($conn);
-            $furniture['stock_quantity'] -= $orderQuantity;
             $message = "Order placed successfully! Product: {$furniture['furniture_name']}, Quantity: {$orderQuantity}, Total: $" . number_format($totalAmount, 2);
             $messageType = 'success';
         } catch (Exception $e) {
@@ -99,8 +92,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $furniture) {
         $messageType = 'error';
     }
 }
-
-mysqli_close($conn);
 
 function getProductImagePath($fid) {
     return '../../image.php?fid=' . ((int)$fid);
@@ -158,8 +149,9 @@ function getProductImagePath($fid) {
             <div class="info-label">Product Preview</div>
             <img src="<?php echo htmlspecialchars(getProductImagePath($furniture['furniture_id'])); ?>" alt="<?php echo htmlspecialchars($furniture['furniture_name']); ?>" class="product-preview-img" onerror="this.style.display='none'">
             <div class="price-tag">$<?php echo number_format($furniture['price'], 2); ?></div>
-            <?php if ($furniture['stock_quantity'] > 0): ?>
-                <span class="stock-badge in-stock">Available</span>
+            <?php $derivedStock = getDerivedStock($conn, $furniture['furniture_id']); ?>
+            <?php if ($derivedStock > 0): ?>
+                <span class="stock-badge in-stock">Available (<?php echo $derivedStock; ?> in stock)</span>
             <?php else: ?>
                 <span class="stock-badge sold-out">Unavailable</span>
             <?php endif; ?>
@@ -176,7 +168,8 @@ function getProductImagePath($fid) {
                     <div class="info-item"><label class="info-label" for="delivery_date">Delivery Date</label><input type="date" id="delivery_date" name="delivery_date" value="<?php echo date('Y-m-d', strtotime('+7 days')); ?>" required></div>
                 </div>
                 <div class="button-group">
-                    <?php if ($furniture['stock_quantity'] > 0): ?><button type="submit" class="button button-primary">Submit Order</button>
+                    <?php $derivedStock2 = getDerivedStock($conn, $furniture['furniture_id']); ?>
+                    <?php if ($derivedStock2 > 0): ?><button type="submit" class="button button-primary">Submit Order</button>
                     <?php else: ?><button type="button" class="button button-primary" disabled>Sold Out</button><?php endif; ?>
                     <button type="reset" class="button">Reset</button>
                 </div>

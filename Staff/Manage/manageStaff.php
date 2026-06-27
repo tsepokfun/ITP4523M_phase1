@@ -22,12 +22,11 @@ table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{padding:10px 
 <div class="content-container"><?php if($msg):?><div class="m <?php echo $mt;?>"><?php echo htmlspecialchars($msg);?></div><?php endif;?>
 <div class="tbl-wrap"><table><thead><tr><th><?php echo sortable_th('staff_id','ID',$sort,$order);?></th><th><?php echo sortable_th('staff_name','Name',$sort,$order);?></th><th><?php echo sortable_th('password','Password',$sort,$order);?></th><th>Edit</th><th>Delete</th></tr></thead><tbody>
 <?php foreach($rows as $rw):$sid=$rw['staff_id'];$isSelf=($sid===(int)currentUserId());?>
-<tr><form method="post"><input type="hidden" name="staff_id" value="<?php echo $sid;?>">
-<td><?php echo $sid;?></td>
+<tr><td colspan="5" style="padding:0"><form method="post"><table style="width:100%;table-layout:fixed;border-collapse:collapse"><tr><td><input type="hidden" name="staff_id" value="<?php echo $sid;?>"><?php echo $sid;?></td>
 <td><input type="text" name="staff_name" value="<?php echo htmlspecialchars($rw['staff_name']);?>" class="inp-sm" required></td>
 <td><input type="text" name="password" value="<?php echo htmlspecialchars($rw['password']);?>" class="inp-sm" required></td>
 <td><button type="submit" name="update" value="1" class="btn-sm">Save</button></td>
 <td><button type="submit" name="delete" value="1" class="btn-sm danger" <?php echo $isSelf?'disabled title="Cannot delete yourself"':'';?> onclick="return confirm('Delete staff <?php echo htmlspecialchars(addslashes($rw['staff_name']));?>?');">Del</button></td>
-</form></tr>
+</tr></table></form></td></tr>
 <?php endforeach;?></tbody></table></div></div></div>
 <script src="../sidebar.js"></script><script>loadSidebar('manage-employees');</script></body></html>

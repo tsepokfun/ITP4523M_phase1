@@ -20,9 +20,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'&&isset($_POST['action'])){
         try{
             $s=mysqli_prepare($conn,"UPDATE Orders SET order_quantity=?,total_amount=total_amount/?*? WHERE order_id=?");mysqli_stmt_bind_param($s,'iiii',$newQty,$oldQty,$newQty,$oid);
             if(!mysqli_stmt_execute($s))throw new Exception('Update failed');mysqli_stmt_close($s);
-            $s=mysqli_prepare($conn,"UPDATE Furniture SET stock_quantity=stock_quantity-? WHERE furniture_id=?");mysqli_stmt_bind_param($s,'ii',$delta,$fid);
-            if(!mysqli_stmt_execute($s))throw new Exception('Stock update failed');mysqli_stmt_close($s);
-            // Material stock
+            // Material stock adjustment
             $fmRes=mysqli_query($conn,"SELECT material_id,material_quantity FROM Furniture_Material WHERE furniture_id=$fid");
             while($fm=mysqli_fetch_assoc($fmRes)){
                 $used=$delta*(float)$fm['material_quantity'];

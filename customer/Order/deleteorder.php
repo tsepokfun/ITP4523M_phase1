@@ -16,8 +16,6 @@ if($_SERVER['REQUEST_METHOD']==='POST'&&isset($_POST['order_id'])){
                 $fid=(int)$o['furniture_id'];$qty=(int)$o['order_quantity'];
                 $s=mysqli_prepare($conn,"DELETE FROM Orders WHERE order_id=?");mysqli_stmt_bind_param($s,'i',$oid);
                 if(!mysqli_stmt_execute($s))throw new Exception('Delete failed');mysqli_stmt_close($s);
-                $s=mysqli_prepare($conn,"UPDATE Furniture SET stock_quantity=stock_quantity+? WHERE furniture_id=?");mysqli_stmt_bind_param($s,'ii',$qty,$fid);
-                if(!mysqli_stmt_execute($s))throw new Exception('Stock restore failed');mysqli_stmt_close($s);
                 $fm=mysqli_query($conn,"SELECT material_id,material_quantity FROM Furniture_Material WHERE furniture_id=$fid");
                 while($fr=mysqli_fetch_assoc($fm)){
                     $used=$qty*(float)$fr['material_quantity'];
